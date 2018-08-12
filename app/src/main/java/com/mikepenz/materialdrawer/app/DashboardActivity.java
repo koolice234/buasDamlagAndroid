@@ -36,10 +36,11 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        String id= getIntent().getStringExtra("id");
         String name= getIntent().getStringExtra("name");
         String email= getIntent().getStringExtra("email");
         // Handle Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.drawer_item_advanced_drawer);
 
@@ -53,26 +54,36 @@ public class DashboardActivity extends AppCompatActivity {
         result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
-                .withHasStableIds(true)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1).withSelectable(false),
-                        new CustomPrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_male).withIdentifier(2).withSelectable(false),
-                        new CustomPrimaryDrawerItem().withName(R.string.drawer_item_school).withIcon(FontAwesome.Icon.faw_building).withIdentifier(3).withSelectable(false),
-                        new CustomPrimaryDrawerItem().withName(R.string.drawer_item_coach).withIcon(FontAwesome.Icon.faw_play).withIdentifier(4).withSelectable(false)
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_male).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_school).withIcon(FontAwesome.Icon.faw_building).withIdentifier(3),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_coach).withIcon(FontAwesome.Icon.faw_play).withIdentifier(4)
                 ) // add the items we want to use with our Drawer
                 .addStickyDrawerItems(
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_logout).withIcon(FontAwesome.Icon.faw_lock).withIdentifier(5).withSelectable(false)
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_logout).withIcon(FontAwesome.Icon.faw_lock).withIdentifier(5).withSelectable(false)
                 ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
 
                         if (drawerItem != null) {
+                            String id= getIntent().getStringExtra("id");
+                            String name= getIntent().getStringExtra("name");
+                            String email= getIntent().getStringExtra("email");
                             Intent intent = null;
                             if (drawerItem.getIdentifier() == 1) {
-                                intent = new Intent(DashboardActivity.this, DashboardActivity.class);
+                                intent = new Intent(getApplicationContext(),DashboardActivity.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                startActivity(intent);
                             } else if (drawerItem.getIdentifier() == 2) {
-                                intent = new Intent(DashboardActivity.this, ProfileViewActivity.class);
+                                intent = new Intent(getApplicationContext(),ProfileViewActivity.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                startActivity(intent);
                             } else if (drawerItem.getIdentifier() == 3) {
                                 intent = new Intent(DashboardActivity.this, DashboardActivity.class);
                             } else if (drawerItem.getIdentifier() == 4) {

@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnSignIn, btnRegister;
 
     //Change the 192.168.43.77 into your computer's IP address,,, go to cmd and type ipconfig
-    String URL= "http://192.168.43.222/bwas_damlag/loginretrieve.php";
+    String URL= "http://192.168.43.222/bwas_damlag_web/loginretrieve.php";
 
     JSONParser jsonParser=new JSONParser();
 
@@ -96,10 +96,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (result != null) {
                     Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
                     String result1 = result.getString("success");
+                    String id = result.getString("id");
                     String name = result.getString("name");
                     String email = result.getString("email");
                     if (result1.equals("1")){
                         Intent intent = new Intent(getApplicationContext(),DashboardActivity.class);
+                        intent.putExtra("id",id);
                         intent.putExtra("name",name);
                         intent.putExtra("email",email);
                         startActivity(intent);

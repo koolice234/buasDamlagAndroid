@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="99dp"
+                android:layout_marginTop="66dp"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Name"
@@ -47,19 +47,24 @@
                 android:hint="Contact Number"
                 android:inputType="phone" />
 
-            <EditText
-                android:id="@+id/editschool"
-                android:layout_width="303dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/editcontactnum"
-                android:layout_centerHorizontal="true"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="School Last Attended"
-                android:inputType="text" />
-
             <Spinner
                 android:id="@+id/sportspinner"
+                android:layout_width="303dp"
+                android:layout_height="41dp"
+                android:layout_below="@+id/lastSchoolSpinner"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1" />
+
+            <Spinner
+                android:id="@+id/positionspinner"
+                android:layout_width="303dp"
+                android:layout_height="41dp"
+                android:layout_below="@+id/sportspinner"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1" />
+
+            <Spinner
+                android:id="@+id/genderspinner"
                 android:layout_width="303dp"
                 android:layout_height="41dp"
                 android:layout_below="@+id/editpassword"
@@ -70,7 +75,7 @@
                 android:id="@+id/editemail"
                 android:layout_width="303dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/editschool"
+                android:layout_below="@+id/editBirthday"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
                 android:ems="10"
@@ -92,7 +97,7 @@
                 android:id="@+id/signupbtn"
                 android:layout_width="303dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sportspinner"
+                android:layout_below="@+id/positionspinner"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
                 android:text="REGISTER"
@@ -102,11 +107,28 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
+                android:layout_above="@+id/editname"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="41dp"
+                android:layout_marginBottom="-52dp"
                 android:text="ATHLETE REGISTRATION"
                 android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+            <Spinner
+                android:id="@+id/lastSchoolSpinner"
+                android:layout_width="303dp"
+                android:layout_height="41dp"
+                android:layout_below="@+id/genderspinner"
+                android:layout_centerHorizontal="true" />
+
+            <EditText
+                android:id="@+id/editBirthday"
+                android:layout_width="303dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/editname"
+                android:layout_below="@+id/editcontactnum"
+                android:ems="10"
+                android:hint="Birth Date"
+                android:inputType="date" />
 
         </RelativeLayout>
 
