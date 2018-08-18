@@ -51,7 +51,6 @@ public class updateProfile extends AppCompatActivity {
         String name= getIntent().getStringExtra("name");
         String email= getIntent().getStringExtra("email");
         updateProfile.GetUserDetails getUserDetails= new updateProfile.GetUserDetails();
-        updateProfile.GetUserDetails updateProfile= new updateProfile.GetUserDetails();
         getUserDetails.execute(id);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_profile);
@@ -101,9 +100,10 @@ public class updateProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                UpdateProfile updateProfile= new UpdateProfile();
+                updateProfile.UpdateAthlete updateProfile= new UpdateAthlete();
                 //identical to JSON Parser
-                updateProfile.execute(getIntent().getStringExtra("id"),
+                updateProfile.execute(
+                        getIntent().getStringExtra("id"),
                         nameText.getText().toString(),
                         addressText.getText().toString(),
                         contactText.getText().toString(),
@@ -204,7 +204,6 @@ public class updateProfile extends AppCompatActivity {
 
         protected JSONObject doInBackground(String... args) {
 
-
             String id = args[0];
 
             ArrayList params = new ArrayList();
@@ -247,7 +246,7 @@ public class updateProfile extends AppCompatActivity {
 
     }
 
-    private class UpdateProfile extends AsyncTask<String, String, JSONObject> {
+    private class UpdateAthlete extends AsyncTask<String, String, JSONObject> {
 
         @Override
 

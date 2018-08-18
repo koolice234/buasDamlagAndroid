@@ -38,7 +38,8 @@ public class ProfileViewActivity extends AppCompatActivity {
     Button  btnUpdate, btnUpdateStats;
 
     private IProfile profile;
-    String URL= "http://192.168.43.222/bwas_damlag_web/profileRetrieve.php";
+    DashboardActivity DA = new DashboardActivity();
+    String URL = DA.URL;
     JSONParser jsonParser=new JSONParser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +161,7 @@ public class ProfileViewActivity extends AppCompatActivity {
 
         protected JSONObject doInBackground(String... args) {
 
-
+            URL = URL.concat("profileRetrieve.php");
             String id = args[0];
 
             ArrayList params = new ArrayList();

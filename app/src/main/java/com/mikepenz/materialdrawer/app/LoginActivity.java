@@ -20,8 +20,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText editemail, editPassword;
     Button btnSignIn, btnRegister;
 
-    //Change the 192.168.43.77 into your computer's IP address,,, go to cmd and type ipconfig
-    String URL= "http://192.168.43.222/bwas_damlag_web/loginretrieve.php";
+    DashboardActivity DA = new DashboardActivity();
+    String URL= DA.URL;
 
     JSONParser jsonParser=new JSONParser();
 
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
 
         protected JSONObject doInBackground(String... args) {
 
-
+            URL = URL.concat("loginretrieve.php");
             String password = args[1];
             String email = args[0];
 

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mikepenz.aboutlibraries.Libs;
@@ -24,14 +25,12 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 public class DashboardActivity extends AppCompatActivity {
-    private static final int PROFILE_SETTING = 1;
 
-    //save our header or result
     private AccountHeader headerResult = null;
     private Drawer result = null;
-
+    ListView lv;
     private IProfile profile;
-
+    String URL= "http://192.168.43.222/bwas_damlag_web/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +42,7 @@ public class DashboardActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.drawer_item_advanced_drawer);
-
+        lv=findViewById(R.id.listView1);
         // Create a few sample profile
         profile = new ProfileDrawerItem().withName(name).withEmail(email).withIcon(getResources().getDrawable(R.drawable.profile3)).withIdentifier(2);
 
