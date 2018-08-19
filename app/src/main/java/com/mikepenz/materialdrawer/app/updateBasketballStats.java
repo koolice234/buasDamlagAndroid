@@ -35,7 +35,7 @@ public class updateBasketballStats extends AppCompatActivity {
     String positionSpin;
     Button btnUpdateStats;
     DashboardActivity DA = new DashboardActivity();
-    String URL= DA.URL;
+    String URL= DA.URL1;
     JSONParser jsonParser=new JSONParser();
 
     protected void onCreate(Bundle savedInstanceState) {

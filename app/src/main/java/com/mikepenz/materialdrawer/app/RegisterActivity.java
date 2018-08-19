@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     //Change the 192.168.43.77 into your computer's IP address,,, go to cmd and type ipconfig
     DashboardActivity DA = new DashboardActivity();
-    String URL = DA.URL;
+    String URL = DA.URL1;
 
     JSONParser jsonParser=new JSONParser();
 

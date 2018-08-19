@@ -222,7 +222,6 @@ public class updateProfile extends AppCompatActivity {
             try {
                 if (result != null) {
 
-
                     TextView nameText=findViewById(R.id.editName);
                     TextView emailText=findViewById(R.id.editEmail);
                     TextView contactText =  findViewById(R.id.editContact);

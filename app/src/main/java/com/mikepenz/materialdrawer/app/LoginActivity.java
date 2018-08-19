@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnSignIn, btnRegister;
 
     DashboardActivity DA = new DashboardActivity();
-    String URL= DA.URL;
+    String URL= DA.URL1;
 
     JSONParser jsonParser=new JSONParser();
 
@@ -40,8 +40,8 @@ public class LoginActivity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AttemptLogin attemptLogin= new AttemptLogin();
-                attemptLogin.execute(editemail.getText().toString(),editPassword.getText().toString());
+            AttemptLogin attemptLogin= new AttemptLogin();
+            attemptLogin.execute(editemail.getText().toString(),editPassword.getText().toString());
             }
         });
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         });
-
 
     }
 
@@ -68,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         @Override
-
         protected JSONObject doInBackground(String... args) {
 
             URL = URL.concat("loginretrieve.php");
@@ -82,15 +80,11 @@ public class LoginActivity extends AppCompatActivity {
 
             JSONObject json = jsonParser.makeHttpRequest(URL, "POST", params);
 
-
             return json;
 
         }
 
         protected void onPostExecute(JSONObject result) {
-
-            // dismiss the dialog once product deleted
-            //Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
 
             try {
                 if (result != null) {

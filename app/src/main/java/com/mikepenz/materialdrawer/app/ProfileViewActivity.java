@@ -39,7 +39,7 @@ public class ProfileViewActivity extends AppCompatActivity {
 
     private IProfile profile;
     DashboardActivity DA = new DashboardActivity();
-    String URL = DA.URL;
+    String URL = DA.URL1;
     JSONParser jsonParser=new JSONParser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,7 +204,7 @@ public class ProfileViewActivity extends AppCompatActivity {
 
             try {
                 if (result != null) {
-                    nameText.setText(result.getString("name"));
+                    nameText.setText(getIntent().getStringExtra("sample"));
                     emailText.setText(result.getString("email"));
                     contactText.setText(result.getString("contactNumber"));
                     addressText.setText(result.getString("address"));
