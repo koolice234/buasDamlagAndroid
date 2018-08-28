@@ -1,17 +1,12 @@
 package com.mikepenz.materialdrawer.app;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,21 +19,23 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
-public class updateProfile extends AppCompatActivity {
+public class ProfileViewActivityBasketball extends AppCompatActivity {
+
+    //save our header or result
     private AccountHeader headerResult = null;
     private Drawer result = null;
-    Button  btnUpdate;
-    DatePickerDialog picker;
+    Button  btnUpdate, btnUpdateStats;
+
     private IProfile profile;
-    String URL= "http://192.168.43.222/bwas_damlag_web/profileRetrieve.php";
-    String URLUpdate= "http://192.168.43.222/bwas_damlag_web/updateProfile.php";
+    DashboardActivity DA = new DashboardActivity();
+    String URL = DA.URL1;
     JSONParser jsonParser=new JSONParser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,73 +43,34 @@ public class updateProfile extends AppCompatActivity {
         String name= getIntent().getStringExtra("name");
         String email= getIntent().getStringExtra("email");
         String sport= getIntent().getStringExtra("sport");
-        updateProfile.GetUserDetails getUserDetails= new updateProfile.GetUserDetails();
+        ProfileViewActivityBasketball.GetUserDetails getUserDetails= new ProfileViewActivityBasketball.GetUserDetails();
         getUserDetails.execute(id);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_profile);
-        final Spinner genderDropdown=findViewById(R.id.genderSpinner);
-        final Spinner schoolDropdown = findViewById(R.id.schoolSpinner);
-        final TextView nameText=findViewById(R.id.editName);
-        final TextView emailText=findViewById(R.id.editEmail);
-        final TextView contactText =  findViewById(R.id.editContact);
-        final TextView addressText =  findViewById(R.id.editAddress);
-        final TextView birthdayText = findViewById(R.id.editBirthday);
-        btnUpdate = findViewById(R.id.updateBtn);
+        setContentView(R.layout.activity_profile);
 
-        String[] gender = new String[]{"Gender","Male", "Female"};
-        ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, gender);
-        genderDropdown.setAdapter(genderAdapter);
-        String[] lastSchool = new String[]
-                {"Select Last School Attended","Bacolod City National High School", "Luis Hervias National High School",
-                        "Domingo Lacson National High School", "Barangay Singcang-Airport National High School", "Negros Occidental High School",
-                        "Bata National High School", "Abkasa National High School", "Handumanan National High School", "Maranatha Christian College High School",
-                        "Mansiligan Agro Industrial High School", "Generoso Villanueva Sr National High School" ,"Sum-ag National High School",
-                        "Saint Joseph School–La Salle", "Colegio San Agustin - Bacolod", "La Consolacion College–Bacolod", "St. Sebastian International School",
-                        "ST. John's Institute-Bacolod", "Riverside College", "St. Scholastica's Academy", "Trinity Christian School"," Jack & Jill School Castleson High",
-                        "Negros Mission Academy","Bacolod Tay Tung High School", "Living Stones International School", "STI West Negros University",
-                        "University of Negros Occidental - Recoletos", "University of St. La Salle"};
-        final ArrayAdapter<String> lastSchoolAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, lastSchool);
-        schoolDropdown.setAdapter(lastSchoolAdapter);
-        birthdayText.setInputType(InputType.TYPE_NULL);
-        birthdayText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
-                // date picker dialog
-                picker = new DatePickerDialog(updateProfile.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                birthdayText.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-                            }
-                        }, year, month, day);
-                picker.show();
-            }
-        });
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                updateProfile.UpdateAthlete updateProfile= new UpdateAthlete();
-                //identical to JSON Parser
-                updateProfile.execute(
-                        getIntent().getStringExtra("id"),
-                        nameText.getText().toString(),
-                        addressText.getText().toString(),
-                        contactText.getText().toString(),
-                        birthdayText.getText().toString(),
-                        emailText.getText().toString(),
-                        genderDropdown.getSelectedItem().toString(),
-                        schoolDropdown.getSelectedItem().toString());
-            }
-        });
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.drawer_item_advanced_drawer);
+        btnUpdate=findViewById(R.id.updateBtn);
+        btnUpdateStats=findViewById(R.id.SportStatsBtn);
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                String id= getIntent().getStringExtra("id");
+                String name= getIntent().getStringExtra("name");
+                String email= getIntent().getStringExtra("email");
+                Intent intent = null;
+                intent = new Intent(ProfileViewActivityBasketball.this, updateProfile.class);
+                intent.putExtra("id",id);
+                intent.putExtra("name",name);
+                intent.putExtra("email",email);
+                startActivity(intent);
+            }
+
+        });
 
         // Create a few sample profile
         profile = new ProfileDrawerItem().withName(name).withEmail(email).withIcon(getResources().getDrawable(R.drawable.profile3)).withIdentifier(2);
@@ -140,7 +98,6 @@ public class updateProfile extends AppCompatActivity {
                 ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-
                         if (drawerItem != null) {
                             String id= getIntent().getStringExtra("id");
                             String name= getIntent().getStringExtra("name");
@@ -163,7 +120,6 @@ public class updateProfile extends AppCompatActivity {
                                     intent.putExtra("sport",sport);
                                     startActivity(intent);
                                 }else{
-                                    intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
                                     intent.putExtra("id",id);
                                     intent.putExtra("name",name);
                                     intent.putExtra("email",email);
@@ -207,7 +163,7 @@ public class updateProfile extends AppCompatActivity {
                                 intent.putExtra("sport",sport);
                                 startActivity(intent);
                             }if (intent != null) {
-                                updateProfile.this.startActivity(intent);
+                                ProfileViewActivityBasketball.this.startActivity(intent);
                             }
                         }
 
@@ -244,6 +200,7 @@ public class updateProfile extends AppCompatActivity {
 
         protected JSONObject doInBackground(String... args) {
 
+            URL = URL.concat("profileRetrieve.php");
             String id = args[0];
 
             ArrayList params = new ArrayList();
@@ -259,20 +216,107 @@ public class updateProfile extends AppCompatActivity {
 
         protected void onPostExecute(JSONObject result) {
 
+            // dismiss the dialog once product deleted
+            //Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+
+            TextView nameText=findViewById(R.id.NameText);
+            TextView emailText=findViewById(R.id.EmailText);
+            TextView contactText =  findViewById(R.id.ContactText);
+            TextView addressText =  findViewById(R.id.AddressText);
+            TextView genderText=findViewById(R.id.GenderText);
+            TextView birthdayText = findViewById(R.id.BirthdayText);
+            TextView schoolText = findViewById(R.id.SchoolText);
+            TextView sportText = findViewById(R.id.SportText);
+            TextView positionText = findViewById(R.id.PositionText);
+
+            TextView pointsText = findViewById(R.id.textPoints);
+            TextView reboundsText = findViewById(R.id.textRebounds);
+            TextView assistsText = findViewById(R.id.textAssists);
+            TextView blocksText = findViewById(R.id.textBlocks);
+            TextView stealsText = findViewById(R.id.textSteals);
+            TextView turnoverText = findViewById(R.id.textTurnovers);
+            TextView foulsText = findViewById(R.id.textFouls);
+            TextView minutesText = findViewById(R.id.textMinutes);
+            TextView missedFGText = findViewById(R.id.textMissedFG);
+
+
+
             try {
                 if (result != null) {
-
-                    TextView nameText=findViewById(R.id.editName);
-                    TextView emailText=findViewById(R.id.editEmail);
-                    TextView contactText =  findViewById(R.id.editContact);
-                    TextView addressText =  findViewById(R.id.editAddress);
-                    TextView birthdayText = findViewById(R.id.editBirthday);
-                    nameText.setText(result.getString("name"));
+                    nameText.setText(getIntent().getStringExtra("name"));
                     emailText.setText(result.getString("email"));
                     contactText.setText(result.getString("contactNumber"));
                     addressText.setText(result.getString("address"));
+                    genderText.setText(result.getString("gender"));
                     birthdayText.setText(result.getString("birthdate"));
+                    schoolText.setText(result.getString("school"));
+                    sportText.setText(result.getString("sport"));
+                    positionText.setText(result.getString("position"));
 
+                    pointsText.setText(result.getString("points"));
+                    reboundsText.setText(result.getString("rebounds"));
+                    assistsText.setText(result.getString("assists"));
+                    blocksText.setText(result.getString("blocks"));
+                    stealsText.setText(result.getString("steals"));
+                    turnoverText.setText(result.getString("turnover"));
+                    foulsText.setText(result.getString("fouls"));
+                    minutesText.setText(result.getString("minutes"));
+                    missedFGText.setText(result.getString("missedFG"));
+
+
+
+                    if (result.getString("sport").equals("Basketball")){
+                        btnUpdateStats.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+                                String id= getIntent().getStringExtra("id");
+                                String name= getIntent().getStringExtra("name");
+                                String email= getIntent().getStringExtra("email");
+                                Intent intent = null;
+                                intent = new Intent(ProfileViewActivityBasketball.this, updateBasketballStats.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                startActivity(intent);
+                            }
+
+                        });
+                    }else if(result.getString("sport").equals("Football")){
+                        btnUpdateStats.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+                                String id= getIntent().getStringExtra("id");
+                                String name= getIntent().getStringExtra("name");
+                                String email= getIntent().getStringExtra("email");
+                                Intent intent = null;
+                                intent = new Intent(ProfileViewActivityBasketball.this, updateFootballStats.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                startActivity(intent);
+                            }
+
+                        });
+                    }else{
+                        btnUpdateStats.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+                                String id= getIntent().getStringExtra("id");
+                                String name= getIntent().getStringExtra("name");
+                                String email= getIntent().getStringExtra("email");
+                                Intent intent = null;
+                                intent = new Intent(ProfileViewActivityBasketball.this, updateVolleyballStats.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                startActivity(intent);
+                            }
+
+                        });
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
                 }
@@ -284,86 +328,5 @@ public class updateProfile extends AppCompatActivity {
         }
 
     }
-
-    private class UpdateAthlete extends AsyncTask<String, String, JSONObject> {
-
-        @Override
-
-        protected void onPreExecute() {
-
-            super.onPreExecute();
-
-        }
-
-        @Override
-
-        protected JSONObject doInBackground(String... args) {
-
-            String id1 = args[0];
-            String name = args[1];
-            String address = args[2];
-            String contact = args[3];
-            String birthday = args[4];
-            String email = args[5];
-            String gender = args[6];
-            String school = args[7];
-
-
-            ArrayList params = new ArrayList();
-
-            params.add(new BasicNameValuePair("id",id1));
-            params.add(new BasicNameValuePair("name",name));
-            params.add(new BasicNameValuePair("address",address));
-            params.add(new BasicNameValuePair("contactNumber",contact));
-            params.add(new BasicNameValuePair("birthday",birthday));
-            params.add(new BasicNameValuePair("email",email));
-            params.add(new BasicNameValuePair("gender",gender));
-            params.add(new BasicNameValuePair("school",school));
-
-            JSONObject json = jsonParser.makeHttpRequest(URLUpdate, "POST", params);
-
-
-            return json;
-
-        }
-
-        protected void onPostExecute(JSONObject result) {
-            String sport = getIntent().getStringExtra("sport");
-            if (result != null) {
-                try {
-                    String result1 = result.getString("success");
-                    String id = result.getString("id");
-                    String name = result.getString("name");
-                    String email = result.getString("email");
-                    if (result1.equals("1")){
-                        if (sport.equals("Basketball")){
-                            Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(),ProfileViewActivityBasketball.class);
-                            intent.putExtra("id",id);
-                            intent.putExtra("name",name);
-                            intent.putExtra("email",email);
-                            startActivity(intent);
-                        }else{
-                            Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
-                            intent.putExtra("id",id);
-                            intent.putExtra("name",name);
-                            intent.putExtra("email",email);
-                            startActivity(intent);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            } else {
-                Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
-            }
-
-
-        }
-
-    }
-
 
 }

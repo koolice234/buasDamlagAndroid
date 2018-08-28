@@ -93,11 +93,13 @@ public class LoginActivity extends AppCompatActivity {
                     String id = result.getString("id");
                     String name = result.getString("name");
                     String email = result.getString("email");
+                    String sport = result.getString("sport");
                     if (result1.equals("1")){
                         Intent intent = new Intent(getApplicationContext(),DashboardActivity.class);
                         intent.putExtra("id",id);
                         intent.putExtra("name",name);
                         intent.putExtra("email",email);
+                        intent.putExtra("sport",sport);
                         startActivity(intent);
                     }
                 } else {

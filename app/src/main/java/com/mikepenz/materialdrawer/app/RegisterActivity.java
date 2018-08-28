@@ -86,14 +86,11 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-        String[] sports = new String[]{"Select Sport","Basketball", "Volleyball", "Football"};
+        String[] sports = new String[]{"Select Sport","Basketball", "Volleyball"};
         final ArrayAdapter<String> sportsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sports);
 
         String[] basketballPosition = new String[]{"Select Position","Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Center"};
         final ArrayAdapter<String> basketballPositionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, basketballPosition);
-        String[] footballPosition = new String[]{"Select Position","Forward", "Striker", "Left Midfielder", "Defensive Midfielder", "Right Midfielder",
-        "Left Back", "Sweeper", "Stopper", "Right back", "Goal Keeper"};
-        final ArrayAdapter<String> footballPositionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, footballPosition);
         String[] volleyballPosition = new String[]{"Select Position","Outside hitter", "Right Side Hitter", "Opposite Hitter", "Setter", "Middle Blocker", "Libero", "Defensive Specialist"};
         final ArrayAdapter<String> volleyballPositionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, volleyballPosition);
         sportsDropdown.setAdapter(sportsAdapter);
@@ -116,19 +113,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
 
-                }else if(sportValue.equals("Football")){
-                    positionDropdown.setAdapter(footballPositionAdapter);
-                    positionDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                            editPosition = positionDropdown.getSelectedItem().toString();
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parentView) {
-
-                        }
-                    });
                 }else{
                     positionDropdown.setAdapter(volleyballPositionAdapter);
                     positionDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

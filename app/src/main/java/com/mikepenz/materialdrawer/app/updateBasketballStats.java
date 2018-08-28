@@ -1,33 +1,23 @@
 package com.mikepenz.materialdrawer.app;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.mikepenz.fontawesome_typeface_library.FontAwesome;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+
 public class updateBasketballStats extends AppCompatActivity {
 
     EditText points, rebounds, steals, assists, blocks;
@@ -153,7 +143,7 @@ public class updateBasketballStats extends AppCompatActivity {
                     String name= getIntent().getStringExtra("name");
                     String email= getIntent().getStringExtra("email");
                     Intent intent = null;
-                    intent = new Intent(updateBasketballStats.this, ProfileViewActivity.class);
+                    intent = new Intent(updateBasketballStats.this, ProfileViewActivityBasketball.class);
                     intent.putExtra("id",id);
                     intent.putExtra("name",name);
                     intent.putExtra("email",email);

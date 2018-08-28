@@ -3,12 +3,10 @@ package com.mikepenz.materialdrawer.app;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,10 +15,8 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.app.drawerItems.CustomPrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
@@ -30,7 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ProfileViewActivity extends AppCompatActivity {
+public class ProfileViewActivityVolleyball extends AppCompatActivity {
 
     //save our header or result
     private AccountHeader headerResult = null;
@@ -46,10 +42,11 @@ public class ProfileViewActivity extends AppCompatActivity {
         String id= getIntent().getStringExtra("id");
         String name= getIntent().getStringExtra("name");
         String email= getIntent().getStringExtra("email");
-        ProfileViewActivity.GetUserDetails getUserDetails= new ProfileViewActivity.GetUserDetails();
+        String sport = getIntent().getStringExtra("sport");
+        ProfileViewActivityVolleyball.GetUserDetails getUserDetails= new ProfileViewActivityVolleyball.GetUserDetails();
         getUserDetails.execute(id);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile_volleyball);
 
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -65,11 +62,13 @@ public class ProfileViewActivity extends AppCompatActivity {
                 String id= getIntent().getStringExtra("id");
                 String name= getIntent().getStringExtra("name");
                 String email= getIntent().getStringExtra("email");
+                String sport = getIntent().getStringExtra("sport");
                 Intent intent = null;
-                intent = new Intent(ProfileViewActivity.this, updateProfile.class);
+                intent = new Intent(ProfileViewActivityVolleyball.this, updateProfile.class);
                 intent.putExtra("id",id);
                 intent.putExtra("name",name);
                 intent.putExtra("email",email);
+                intent.putExtra("sport",sport);
                 startActivity(intent);
             }
 
@@ -88,10 +87,13 @@ public class ProfileViewActivity extends AppCompatActivity {
                 .withHasStableIds(true)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1).withSelectable(false),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_male).withIdentifier(2).withSelectable(false),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_school).withIcon(FontAwesome.Icon.faw_building).withIdentifier(3).withSelectable(false),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_coach).withIcon(FontAwesome.Icon.faw_play).withIdentifier(4).withSelectable(false)
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_male).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_invitations).withIcon(FontAwesome.Icon.faw_facebook_messenger).withIdentifier(5),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_iq).withIcon(FontAwesome.Icon.faw_question).withIdentifier(6),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_applications).withIcon(FontAwesome.Icon.faw_tasks).withIdentifier(7),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_school).withIcon(FontAwesome.Icon.faw_building).withIdentifier(3),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_coach).withIcon(FontAwesome.Icon.faw_play).withIdentifier(4)
                 ) // add the items we want to use with our Drawer
                 .addStickyDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_logout).withIcon(FontAwesome.Icon.faw_lock).withIdentifier(5).withSelectable(false)
@@ -103,28 +105,69 @@ public class ProfileViewActivity extends AppCompatActivity {
                             String id= getIntent().getStringExtra("id");
                             String name= getIntent().getStringExtra("name");
                             String email= getIntent().getStringExtra("email");
+                            String sport = getIntent().getStringExtra("sport");
                             Intent intent = null;
                             if (drawerItem.getIdentifier() == 1) {
-                                intent = new Intent(ProfileViewActivity.this, DashboardActivity.class);
+                                intent = new Intent(getApplicationContext(),DashboardActivity.class);
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
                                 startActivity(intent);
                             } else if (drawerItem.getIdentifier() == 2) {
-                                intent = new Intent(ProfileViewActivity.this, ProfileViewActivity.class);
+                                if(sport.equals("Basketball")){
+                                    intent = new Intent(getApplicationContext(),ProfileViewActivityBasketball.class);
+                                    intent.putExtra("id",id);
+                                    intent.putExtra("name",name);
+                                    intent.putExtra("email",email);
+                                    intent.putExtra("sport",sport);
+                                    startActivity(intent);
+                                }else{
+                                    intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
+                                    intent.putExtra("id",id);
+                                    intent.putExtra("name",name);
+                                    intent.putExtra("email",email);
+                                    intent.putExtra("sport",sport);
+                                    startActivity(intent);
+                                }
+
+                            } else if (drawerItem.getIdentifier() == 3) {
+                                intent = new Intent(getApplicationContext(), DashboardActivity.class);
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
                                 startActivity(intent);
-                            } else if (drawerItem.getIdentifier() == 3) {
-                                intent = new Intent(ProfileViewActivity.this, DashboardActivity.class);
                             } else if (drawerItem.getIdentifier() == 4) {
-                                intent = new Intent(ProfileViewActivity.this, DashboardActivity.class);
+                                intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
+                                startActivity(intent);
                             }else if (drawerItem.getIdentifier() == 5) {
-                                intent = new Intent(ProfileViewActivity.this, LoginActivity.class);
-                            }
-                            if (intent != null) {
-                                ProfileViewActivity.this.startActivity(intent);
+                                intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
+                                startActivity(intent);
+                            }else if (drawerItem.getIdentifier() == 6) {
+                                intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
+                                startActivity(intent);
+                            }else if (drawerItem.getIdentifier() == 7) {
+                                intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                intent.putExtra("id", id);
+                                intent.putExtra("name", name);
+                                intent.putExtra("email", email);
+                                intent.putExtra("sport",sport);
+                                startActivity(intent);
+                            }if (intent != null) {
+                                ProfileViewActivityVolleyball.this.startActivity(intent);
                             }
                         }
 
@@ -158,10 +201,9 @@ public class ProfileViewActivity extends AppCompatActivity {
         }
 
         @Override
-
         protected JSONObject doInBackground(String... args) {
 
-            URL = URL.concat("profileRetrieve.php");
+            URL = URL.concat("profileRetrieveVolleyball.php");
             String id = args[0];
 
             ArrayList params = new ArrayList();
@@ -190,21 +232,21 @@ public class ProfileViewActivity extends AppCompatActivity {
             TextView sportText = findViewById(R.id.SportText);
             TextView positionText = findViewById(R.id.PositionText);
 
-            TextView pointsText = findViewById(R.id.textPoints);
-            TextView reboundsText = findViewById(R.id.textRebounds);
-            TextView assistsText = findViewById(R.id.textAssists);
-            TextView blocksText = findViewById(R.id.textBlocks);
-            TextView stealsText = findViewById(R.id.textSteals);
-            TextView turnoverText = findViewById(R.id.textTurnovers);
-            TextView foulsText = findViewById(R.id.textFouls);
-            TextView minutesText = findViewById(R.id.textMinutes);
-            TextView missedFGText = findViewById(R.id.textMissedFG);
+            TextView killsText = findViewById(R.id.killsText);
+            TextView AssistsText = findViewById(R.id.AssistsText);
+            TextView ServiceAcesText = findViewById(R.id.ServiceAcesText);
+            TextView DigsText = findViewById(R.id.DigsText);
+            TextView TotalGamesText = findViewById(R.id.TotalGamesText);
+            TextView BlocksText = findViewById(R.id.BlocksText);
+
+
+
 
 
 
             try {
                 if (result != null) {
-                    nameText.setText(getIntent().getStringExtra("sample"));
+                    nameText.setText(getIntent().getStringExtra("name"));
                     emailText.setText(result.getString("email"));
                     contactText.setText(result.getString("contactNumber"));
                     addressText.setText(result.getString("address"));
@@ -214,48 +256,28 @@ public class ProfileViewActivity extends AppCompatActivity {
                     sportText.setText(result.getString("sport"));
                     positionText.setText(result.getString("position"));
 
-                    pointsText.setText(result.getString("points"));
-                    reboundsText.setText(result.getString("rebounds"));
-                    assistsText.setText(result.getString("assists"));
-                    blocksText.setText(result.getString("blocks"));
-                    stealsText.setText(result.getString("steals"));
-                    turnoverText.setText(result.getString("turnover"));
-                    foulsText.setText(result.getString("fouls"));
-                    minutesText.setText(result.getString("minutes"));
-                    missedFGText.setText(result.getString("missedFG"));
+                    killsText.setText(result.getString("kills"));
+                    AssistsText.setText(result.getString("assists"));
+                    ServiceAcesText.setText(result.getString("service_ace"));
+                    DigsText.setText(result.getString("digs"));
+                    BlocksText.setText(result.getString("blocks"));
+                    TotalGamesText.setText(result.getString("games"));
 
 
 
-                    if (result.getString("sport").equals("Basketball")){
+                    if (result.getString("sport").equals("Basketball")) {
                         btnUpdateStats.setOnClickListener(new View.OnClickListener() {
 
                             @Override
                             public void onClick(View view) {
-                                String id= getIntent().getStringExtra("id");
-                                String name= getIntent().getStringExtra("name");
-                                String email= getIntent().getStringExtra("email");
+                                String id = getIntent().getStringExtra("id");
+                                String name = getIntent().getStringExtra("name");
+                                String email = getIntent().getStringExtra("email");
                                 Intent intent = null;
-                                intent = new Intent(ProfileViewActivity.this, updateBasketballStats.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                startActivity(intent);
-                            }
-
-                        });
-                    }else if(result.getString("sport").equals("Football")){
-                        btnUpdateStats.setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
-                                String id= getIntent().getStringExtra("id");
-                                String name= getIntent().getStringExtra("name");
-                                String email= getIntent().getStringExtra("email");
-                                Intent intent = null;
-                                intent = new Intent(ProfileViewActivity.this, updateFootballStats.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
+                                intent = new Intent(ProfileViewActivityVolleyball.this, updateBasketballStats.class);
+                                intent.putExtra("id", id);
+                                intent.putExtra("name", name);
+                                intent.putExtra("email", email);
                                 startActivity(intent);
                             }
 
@@ -269,7 +291,7 @@ public class ProfileViewActivity extends AppCompatActivity {
                                 String name= getIntent().getStringExtra("name");
                                 String email= getIntent().getStringExtra("email");
                                 Intent intent = null;
-                                intent = new Intent(ProfileViewActivity.this, updateVolleyballStats.class);
+                                intent = new Intent(ProfileViewActivityVolleyball.this, updateVolleyballStats.class);
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
@@ -284,7 +306,6 @@ public class ProfileViewActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
 
         }
 
