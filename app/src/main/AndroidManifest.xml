@@ -64,6 +64,11 @@
             android:label="@string/app_name"
             android:theme="@style/MaterialDrawerTheme">
         </activity>
+        <activity
+            android:name=".invitations"
+            android:label="@string/app_name"
+            android:theme="@style/MaterialDrawerTheme">
+        </activity>
     </application>
 
 </manifest>

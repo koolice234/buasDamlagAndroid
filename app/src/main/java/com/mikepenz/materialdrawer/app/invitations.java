@@ -1,12 +1,14 @@
 package com.mikepenz.materialdrawer.app;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,59 +22,64 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
-public class ProfileViewActivityVolleyball extends AppCompatActivity {
+public class invitations extends AppCompatActivity {
 
-    //save our header or result
     private AccountHeader headerResult = null;
     private Drawer result = null;
-    Button  btnUpdate, btnUpdateStats;
-
+    ListView lv;
     private IProfile profile;
     DashboardActivity DA = new DashboardActivity();
     String URL = DA.URL1;
-    JSONParser jsonParser=new JSONParser();
+    ArrayAdapter<String> adapter;
+    String line = null;
+    String result1 = null;
+    InputStream is = null;
+    final ArrayList<String> invitationsID = new ArrayList<String>(); // List of Athlete ID's
+    String[] data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String id= getIntent().getStringExtra("id");
-        String name= getIntent().getStringExtra("name");
-        String email= getIntent().getStringExtra("email");
-        String sport = getIntent().getStringExtra("sport");
-        ProfileViewActivityVolleyball.GetUserDetails getUserDetails= new ProfileViewActivityVolleyball.GetUserDetails();
-        getUserDetails.execute(id);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_volleyball);
-
+        setContentView(R.layout.invitations);
+        String id= getIntent().getStringExtra("id");
+        final String name= getIntent().getStringExtra("name");
+        final String email= getIntent().getStringExtra("email");
+        final String sport = getIntent().getStringExtra("sport");
         // Handle Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.drawer_item_advanced_drawer);
-        btnUpdate=findViewById(R.id.updateBtn);
-        btnUpdateStats=findViewById(R.id.SportStatsBtn);
+        lv=findViewById(R.id.listView1);
+        lv.setClickable(true);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                String id= getIntent().getStringExtra("id");
-                String name= getIntent().getStringExtra("name");
-                String email= getIntent().getStringExtra("email");
-                String sport = getIntent().getStringExtra("sport");
-                Intent intent = null;
-                intent = new Intent(ProfileViewActivityVolleyball.this, updateProfile.class);
-                intent.putExtra("id",id);
-                intent.putExtra("name",name);
-                intent.putExtra("email",email);
-                intent.putExtra("sport",sport);
-                startActivity(intent);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer selectionID = Integer.parseInt(invitationsID.get(position));
+                String select = selectionID.toString();
+                    Intent intent = null;
+                    intent = new Intent(getApplicationContext(), viewInvitations.class);
+                    intent.putExtra("RowID", select);
+                    intent.putExtra("name", name);
+                    intent.putExtra("email", email);
+                    intent.putExtra("sport", sport);
+                    startActivity(intent);
             }
-
         });
+        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
+
+            getData();
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
+            lv.setAdapter(adapter);
 
         // Create a few sample profile
         profile = new ProfileDrawerItem().withName(name).withEmail(email).withIcon(getResources().getDrawable(R.drawable.profile3)).withIdentifier(2);
@@ -90,6 +97,7 @@ public class ProfileViewActivityVolleyball extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_male).withIdentifier(2),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_invitations).withIcon(FontAwesome.Icon.faw_facebook_messenger).withIdentifier(5),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_iq).withIcon(FontAwesome.Icon.faw_question).withIdentifier(6),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_applications).withIcon(FontAwesome.Icon.faw_tasks).withIdentifier(7),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_school).withIcon(FontAwesome.Icon.faw_building).withIdentifier(3),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_coach).withIcon(FontAwesome.Icon.faw_play).withIdentifier(4)
                 ) // add the items we want to use with our Drawer
@@ -128,35 +136,42 @@ public class ProfileViewActivityVolleyball extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             } else if (drawerItem.getIdentifier() == 3) {
-                                intent = new Intent(getApplicationContext(),DashboardActivity.class);
+                                intent = new Intent(invitations.this, DashboardActivity.class);
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
                                 intent.putExtra("sport",sport);
                                 startActivity(intent);
                             } else if (drawerItem.getIdentifier() == 4) {
-                                intent = new Intent(getApplicationContext(),DashboardActivity.class);
+                                intent = new Intent(invitations.this, DashboardActivity.class);
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
                                 intent.putExtra("sport",sport);
                                 startActivity(intent);
                             }else if (drawerItem.getIdentifier() == 5) {
-                                intent = new Intent(getApplicationContext(),invitations.class);
+                                intent = new Intent(invitations.this, invitations.class);
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
                                 intent.putExtra("sport",sport);
                                 startActivity(intent);
                             }else if (drawerItem.getIdentifier() == 6) {
-                                intent = new Intent(getApplicationContext(),LoginActivity.class);
+                                intent = new Intent(invitations.this, LoginActivity.class);
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
                                 intent.putExtra("sport",sport);
                                 startActivity(intent);
+                            }else if (drawerItem.getIdentifier() == 7) {
+                                intent = new Intent(invitations.this, LoginActivity.class);
+                                intent.putExtra("id", id);
+                                intent.putExtra("name", name);
+                                intent.putExtra("email", email);
+                                intent.putExtra("sport",sport);
+                                startActivity(intent);
                             }if (intent != null) {
-                                ProfileViewActivityVolleyball.this.startActivity(intent);
+                                invitations.this.startActivity(intent);
                             }
                         }
 
@@ -165,6 +180,8 @@ public class ProfileViewActivityVolleyball extends AppCompatActivity {
                 })
                 .withSavedInstance(savedInstanceState)
                 .build();
+
+
     }
 
     private void buildHeader(boolean compact, Bundle savedInstanceState) {
@@ -177,126 +194,54 @@ public class ProfileViewActivityVolleyball extends AppCompatActivity {
                 .withSavedInstance(savedInstanceState)
                 .build();
     }
+    private void getData(){
+        TextView label = findViewById(R.id.labelRankings);
+        try{
+            String address = URL.concat("invitationsRetrieve.php");
+            URL url = new URL(address);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            is = new BufferedInputStream(con.getInputStream());
 
-    private class GetUserDetails extends AsyncTask<String, String, JSONObject> {
-
-        @Override
-
-        protected void onPreExecute() {
-
-            super.onPreExecute();
-
+        }catch (Exception e)
+        {
+            e.printStackTrace();
         }
 
-        @Override
-        protected JSONObject doInBackground(String... args) {
+        try{
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            StringBuilder sb = new StringBuilder();
 
-            URL = URL.concat("profileRetrieveVolleyball.php");
-            String id = args[0];
-
-            ArrayList params = new ArrayList();
-
-            params.add(new BasicNameValuePair("id",id));
-
-            JSONObject json = jsonParser.makeHttpRequest(URL, "POST", params);
-
-
-            return json;
-
-        }
-
-        protected void onPostExecute(JSONObject result) {
-
-            // dismiss the dialog once product deleted
-            //Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
-
-            TextView nameText=findViewById(R.id.NameText);
-            TextView emailText=findViewById(R.id.EmailText);
-            TextView contactText =  findViewById(R.id.ContactText);
-            TextView addressText =  findViewById(R.id.AddressText);
-            TextView genderText=findViewById(R.id.GenderText);
-            TextView birthdayText = findViewById(R.id.BirthdayText);
-            TextView schoolText = findViewById(R.id.SchoolText);
-            TextView sportText = findViewById(R.id.SportText);
-            TextView positionText = findViewById(R.id.PositionText);
-
-            TextView killsText = findViewById(R.id.killsText);
-            TextView AssistsText = findViewById(R.id.AssistsText);
-            TextView ServiceAcesText = findViewById(R.id.ServiceAcesText);
-            TextView DigsText = findViewById(R.id.DigsText);
-            TextView TotalGamesText = findViewById(R.id.TotalGamesText);
-            TextView BlocksText = findViewById(R.id.BlocksText);
-
-
-
-
-
-
-            try {
-                if (result != null) {
-                    nameText.setText(getIntent().getStringExtra("name"));
-                    emailText.setText(result.getString("email"));
-                    contactText.setText(result.getString("contactNumber"));
-                    addressText.setText(result.getString("address"));
-                    genderText.setText(result.getString("gender"));
-                    birthdayText.setText(result.getString("birthdate"));
-                    schoolText.setText(result.getString("school"));
-                    sportText.setText(result.getString("sport"));
-                    positionText.setText(result.getString("position"));
-
-                    killsText.setText(result.getString("kills"));
-                    AssistsText.setText(result.getString("assists"));
-                    ServiceAcesText.setText(result.getString("service_ace"));
-                    DigsText.setText(result.getString("digs"));
-                    BlocksText.setText(result.getString("blocks"));
-                    TotalGamesText.setText(result.getString("games"));
-
-
-
-                    if (result.getString("sport").equals("Basketball")) {
-                        btnUpdateStats.setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
-                                String id = getIntent().getStringExtra("id");
-                                String name = getIntent().getStringExtra("name");
-                                String email = getIntent().getStringExtra("email");
-                                Intent intent = null;
-                                intent = new Intent(ProfileViewActivityVolleyball.this, updateBasketballStats.class);
-                                intent.putExtra("id", id);
-                                intent.putExtra("name", name);
-                                intent.putExtra("email", email);
-                                startActivity(intent);
-                            }
-
-                        });
-                    }else{
-                        btnUpdateStats.setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
-                                String id= getIntent().getStringExtra("id");
-                                String name= getIntent().getStringExtra("name");
-                                String email= getIntent().getStringExtra("email");
-                                Intent intent = null;
-                                intent = new Intent(ProfileViewActivityVolleyball.this, updateVolleyballStats.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                startActivity(intent);
-                            }
-
-                        });
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            while ((line = br.readLine()) != null)
+            {
+                sb.append(line+"\n");
             }
 
+            is.close();
+            result1 = sb.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try
+        {
+            JSONArray ja = new JSONArray(result1);
+            JSONObject jo;
+
+            data=new String[ja.length()];
+
+            for(int i=0;i<ja.length();i++)
+            {
+                jo=ja.getJSONObject(i);
+                data[i] = jo.getString("name");
+                invitationsID.add(jo.getString("id"));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
     }
 
 }
+

@@ -113,7 +113,6 @@ public class DashboardActivity extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_male).withIdentifier(2),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_invitations).withIcon(FontAwesome.Icon.faw_facebook_messenger).withIdentifier(5),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_iq).withIcon(FontAwesome.Icon.faw_question).withIdentifier(6),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_applications).withIcon(FontAwesome.Icon.faw_tasks).withIdentifier(7),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_school).withIcon(FontAwesome.Icon.faw_building).withIdentifier(3),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_coach).withIcon(FontAwesome.Icon.faw_play).withIdentifier(4)
                 ) // add the items we want to use with our Drawer
@@ -166,7 +165,7 @@ public class DashboardActivity extends AppCompatActivity {
                                 intent.putExtra("sport",sport);
                                 startActivity(intent);
                             }else if (drawerItem.getIdentifier() == 5) {
-                                intent = new Intent(DashboardActivity.this, LoginActivity.class);
+                                intent = new Intent(DashboardActivity.this, invitations.class);
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
@@ -177,13 +176,6 @@ public class DashboardActivity extends AppCompatActivity {
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }else if (drawerItem.getIdentifier() == 7) {
-                                intent = new Intent(DashboardActivity.this, LoginActivity.class);
-                                intent.putExtra("id", id);
-                                intent.putExtra("name", name);
-                                intent.putExtra("email", email);
                                 intent.putExtra("sport",sport);
                                 startActivity(intent);
                             }if (intent != null) {
