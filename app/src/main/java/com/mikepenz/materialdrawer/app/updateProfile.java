@@ -37,8 +37,8 @@ public class updateProfile extends AppCompatActivity {
     Button  btnUpdate;
     DatePickerDialog picker;
     private IProfile profile;
-    String URL= "http://192.168.43.222/bwas_damlag_web/profileRetrieve.php";
-    String URLUpdate= "http://192.168.43.222/bwas_damlag_web/updateProfile.php";
+    String URL= "https://buasdamlag.000webhostapp.com/profileRetrieve.php";
+    String URLUpdate= "https://buasdamlag.000webhostapp.com/updateProfile.php";
     JSONParser jsonParser=new JSONParser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,75 +141,8 @@ public class updateProfile extends AppCompatActivity {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
 
-                        if (drawerItem != null) {
-                            String id= getIntent().getStringExtra("id");
-                            String name= getIntent().getStringExtra("name");
-                            String email= getIntent().getStringExtra("email");
-                            String sport = getIntent().getStringExtra("sport");
-                            Intent intent = null;
-                            if (drawerItem.getIdentifier() == 1) {
-                                intent = new Intent(getApplicationContext(),DashboardActivity.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            } else if (drawerItem.getIdentifier() == 2) {
-                                if(sport.equals("Basketball")){
-                                    intent = new Intent(getApplicationContext(),ProfileViewActivityBasketball.class);
-                                    intent.putExtra("id",id);
-                                    intent.putExtra("name",name);
-                                    intent.putExtra("email",email);
-                                    intent.putExtra("sport",sport);
-                                    startActivity(intent);
-                                }else{
-                                    intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
-                                    intent.putExtra("id",id);
-                                    intent.putExtra("name",name);
-                                    intent.putExtra("email",email);
-                                    intent.putExtra("sport",sport);
-                                    startActivity(intent);
-                                }
-
-                            } else if (drawerItem.getIdentifier() == 3) {
-                                intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            } else if (drawerItem.getIdentifier() == 4) {
-                                intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }else if (drawerItem.getIdentifier() == 5) {
-                                intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }else if (drawerItem.getIdentifier() == 6) {
-                                intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }else if (drawerItem.getIdentifier() == 7) {
-                                intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                intent.putExtra("id", id);
-                                intent.putExtra("name", name);
-                                intent.putExtra("email", email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }if (intent != null) {
-                                updateProfile.this.startActivity(intent);
-                            }
-                        }
+                        DashboardActivity DA = new DashboardActivity();
+                        DA.sidebar(drawerItem);
 
                         return false;
                     }

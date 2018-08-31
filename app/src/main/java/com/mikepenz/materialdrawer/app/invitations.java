@@ -40,7 +40,6 @@ public class invitations extends AppCompatActivity {
     ListView lv;
     private IProfile profile;
     DashboardActivity DA = new DashboardActivity();
-    String URL = DA.URL1;
     ArrayAdapter<String> adapter;
     String line = null;
     String result1 = null;
@@ -197,8 +196,8 @@ public class invitations extends AppCompatActivity {
     private void getData(){
         TextView label = findViewById(R.id.labelRankings);
         try{
-            String address = URL.concat("invitationsRetrieve.php");
-            URL url = new URL(address);
+            String URL = "https://buasdamlag.000webhostapp.com/invitationsRetrieve.php";
+            URL url = new URL(URL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             is = new BufferedInputStream(con.getInputStream());

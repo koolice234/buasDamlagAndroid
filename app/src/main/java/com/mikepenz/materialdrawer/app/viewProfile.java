@@ -39,7 +39,6 @@ public class viewProfile extends AppCompatActivity {
 
     private IProfile profile;
     DashboardActivity DA = new DashboardActivity();
-    String URL = DA.URL1;
     JSONParser jsonParser=new JSONParser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +63,7 @@ public class viewProfile extends AppCompatActivity {
         @Override
 
         protected JSONObject doInBackground(String... args) {
-
-            URL = URL.concat("profileRetrieve.php");
+            String URL = "https://buasdamlag.000webhostapp.com/profileRetrieve.php";
             String id = args[0];
 
             ArrayList params = new ArrayList();

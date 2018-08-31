@@ -21,7 +21,6 @@ public class LoginActivity extends AppCompatActivity {
     Button btnSignIn, btnRegister;
 
     DashboardActivity DA = new DashboardActivity();
-    String URL= DA.URL1;
 
     JSONParser jsonParser=new JSONParser();
 
@@ -68,8 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected JSONObject doInBackground(String... args) {
-
-            URL = URL.concat("loginretrieve.php");
+            String URL = "https://buasdamlag.000webhostapp.com/loginretrieve.php";
             String password = args[1];
             String email = args[0];
 

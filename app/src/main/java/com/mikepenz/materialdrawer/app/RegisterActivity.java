@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     //Change the 192.168.43.77 into your computer's IP address,,, go to cmd and type ipconfig
     DashboardActivity DA = new DashboardActivity();
-    String URL = DA.URL1;
+
 
     JSONParser jsonParser=new JSONParser();
 
@@ -200,7 +200,7 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
 
         protected JSONObject doInBackground(String... args) {
-            URL = URL.concat("registerAthlete.php");
+            String URL = "https://buasdamlag.000webhostapp.com/registerAthlete.php";
             String name = args[0];
             String address = args[1];
             String contactNumber = args[2];

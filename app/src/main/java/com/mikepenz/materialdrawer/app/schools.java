@@ -25,7 +25,6 @@ public class schools extends AppCompatActivity {
 
     private IProfile profile;
     DashboardActivity DA = new DashboardActivity();
-    String URL = DA.URL1;
     JSONParser jsonParser=new JSONParser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +34,7 @@ public class schools extends AppCompatActivity {
         String email = getIntent().getStringExtra("email");
         String sport = getIntent().getStringExtra("sport");
 
+        setContentView(R.layout.schools);
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -64,68 +64,7 @@ public class schools extends AppCompatActivity {
                 ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if (drawerItem != null) {
-                            String id = getIntent().getStringExtra("id");
-                            String name = getIntent().getStringExtra("name");
-                            String email = getIntent().getStringExtra("email");
-                            String sport = getIntent().getStringExtra("sport");
-                            Intent intent = null;
-                            if (drawerItem.getIdentifier() == 1) {
-                                intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                                intent.putExtra("id", id);
-                                intent.putExtra("name", name);
-                                intent.putExtra("email", email);
-                                intent.putExtra("sport", sport);
-                                startActivity(intent);
-                            } else if (drawerItem.getIdentifier() == 2) {
-                                if (sport.equals("Basketball")) {
-                                    intent = new Intent(getApplicationContext(), ProfileViewActivityBasketball.class);
-                                    intent.putExtra("id", id);
-                                    intent.putExtra("name", name);
-                                    intent.putExtra("email", email);
-                                    intent.putExtra("sport", sport);
-                                    startActivity(intent);
-                                } else {
-                                    intent = new Intent(getApplicationContext(), ProfileViewActivityVolleyball.class);
-                                    intent.putExtra("id", id);
-                                    intent.putExtra("name", name);
-                                    intent.putExtra("email", email);
-                                    intent.putExtra("sport", sport);
-                                    startActivity(intent);
-                                }
-                            } else if (drawerItem.getIdentifier() == 3) {
-                                intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                                intent.putExtra("id", id);
-                                intent.putExtra("name", name);
-                                intent.putExtra("email", email);
-                                intent.putExtra("sport", sport);
-                                startActivity(intent);
-                            } else if (drawerItem.getIdentifier() == 4) {
-                                intent = new Intent(getApplicationContext(), DashboardActivity.class);
-                                intent.putExtra("id", id);
-                                intent.putExtra("name", name);
-                                intent.putExtra("email", email);
-                                intent.putExtra("sport", sport);
-                                startActivity(intent);
-                            } else if (drawerItem.getIdentifier() == 5) {
-                                intent = new Intent(getApplicationContext(), invitations.class);
-                                intent.putExtra("id", id);
-                                intent.putExtra("name", name);
-                                intent.putExtra("email", email);
-                                intent.putExtra("sport", sport);
-                                startActivity(intent);
-                            } else if (drawerItem.getIdentifier() == 6) {
-                                intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                intent.putExtra("id", id);
-                                intent.putExtra("name", name);
-                                intent.putExtra("email", email);
-                                intent.putExtra("sport", sport);
-                                startActivity(intent);
-                            }
-                            if (intent != null) {
-                                schools.this.startActivity(intent);
-                            }
-                        }
+                        DA.sidebar(drawerItem);
 
                         return false;
                     }

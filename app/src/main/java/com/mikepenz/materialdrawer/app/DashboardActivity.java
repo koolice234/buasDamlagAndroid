@@ -39,7 +39,6 @@ public class DashboardActivity extends AppCompatActivity {
     private Drawer result = null;
     ListView lv;
     private IProfile profile;
-    String URL1 = "http://192.168.43.222/bwas_damlag_web/";
     ArrayAdapter<String> adapter;
     String line = null;
     String result1 = null;
@@ -54,10 +53,6 @@ public class DashboardActivity extends AppCompatActivity {
         final String name= getIntent().getStringExtra("name");
         final String email= getIntent().getStringExtra("email");
         final String sport = getIntent().getStringExtra("sport");
-        // Handle Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.drawer_item_advanced_drawer);
         lv=findViewById(R.id.listView1);
         lv.setClickable(true);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -100,6 +95,10 @@ public class DashboardActivity extends AppCompatActivity {
         // Create a few sample profile
         profile = new ProfileDrawerItem().withName(name).withEmail(email).withIcon(getResources().getDrawable(R.drawable.profile3)).withIdentifier(2);
 
+        // Handle Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.drawer_item_advanced_drawer);
         // Create the AccountHeader
         buildHeader(false, savedInstanceState);
 
@@ -121,68 +120,7 @@ public class DashboardActivity extends AppCompatActivity {
                 ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if (drawerItem != null) {
-                            String id= getIntent().getStringExtra("id");
-                            String name= getIntent().getStringExtra("name");
-                            String email= getIntent().getStringExtra("email");
-                            String sport = getIntent().getStringExtra("sport");
-                            Intent intent = null;
-                            if (drawerItem.getIdentifier() == 1) {
-                                    intent = new Intent(getApplicationContext(),DashboardActivity.class);
-                                    intent.putExtra("id",id);
-                                    intent.putExtra("name",name);
-                                    intent.putExtra("email",email);
-                                    intent.putExtra("sport",sport);
-                                    startActivity(intent);
-                            } else if (drawerItem.getIdentifier() == 2) {
-                                if(sport.equals("Basketball")){
-                                    intent = new Intent(getApplicationContext(),ProfileViewActivityBasketball.class);
-                                    intent.putExtra("id",id);
-                                    intent.putExtra("name",name);
-                                    intent.putExtra("email",email);
-                                    intent.putExtra("sport",sport);
-                                    startActivity(intent);
-                                }else{
-                                    intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
-                                    intent.putExtra("id",id);
-                                    intent.putExtra("name",name);
-                                    intent.putExtra("email",email);
-                                    intent.putExtra("sport",sport);
-                                    startActivity(intent);
-                                }
-                            } else if (drawerItem.getIdentifier() == 3) {
-                                intent = new Intent(DashboardActivity.this, DashboardActivity.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            } else if (drawerItem.getIdentifier() == 4) {
-                                intent = new Intent(DashboardActivity.this, DashboardActivity.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }else if (drawerItem.getIdentifier() == 5) {
-                                intent = new Intent(DashboardActivity.this, invitations.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }else if (drawerItem.getIdentifier() == 6) {
-                                intent = new Intent(DashboardActivity.this, LoginActivity.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }if (intent != null) {
-                                DashboardActivity.this.startActivity(intent);
-                            }
-                        }
-
+                            sidebar(drawerItem);
                         return false;
                     }
                 })
@@ -190,6 +128,68 @@ public class DashboardActivity extends AppCompatActivity {
                 .build();
 
 
+    }
+    public void sidebar(IDrawerItem drawerItem){
+
+        if (drawerItem != null) {
+            String id= getIntent().getStringExtra("id");
+            String name= getIntent().getStringExtra("name");
+            String email= getIntent().getStringExtra("email");
+            String sport = getIntent().getStringExtra("sport");
+            Intent intent = null;
+            if (drawerItem.getIdentifier() == 1) {
+                intent = new Intent(getApplicationContext(),DashboardActivity.class);
+                intent.putExtra("id",id);
+                intent.putExtra("name",name);
+                intent.putExtra("email",email);
+                intent.putExtra("sport",sport);
+                startActivity(intent);
+            } else if (drawerItem.getIdentifier() == 2) {
+                if(sport.equals("Basketball")){
+                    intent = new Intent(getApplicationContext(),ProfileViewActivityBasketball.class);
+                    intent.putExtra("id",id);
+                    intent.putExtra("name",name);
+                    intent.putExtra("email",email);
+                    intent.putExtra("sport",sport);
+                    startActivity(intent);
+                }else{
+                    intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
+                    intent.putExtra("id",id);
+                    intent.putExtra("name",name);
+                    intent.putExtra("email",email);
+                    intent.putExtra("sport",sport);
+                    startActivity(intent);
+                }
+            } else if (drawerItem.getIdentifier() == 3) {
+                intent = new Intent(getApplicationContext(),schools.class);
+                intent.putExtra("id",id);
+                intent.putExtra("name",name);
+                intent.putExtra("email",email);
+                intent.putExtra("sport",sport);
+                startActivity(intent);
+            } else if (drawerItem.getIdentifier() == 4) {
+                intent = new Intent(getApplicationContext(), DashboardActivity.class);
+                intent.putExtra("id",id);
+                intent.putExtra("name",name);
+                intent.putExtra("email",email);
+                intent.putExtra("sport",sport);
+                startActivity(intent);
+            }else if (drawerItem.getIdentifier() == 5) {
+                intent = new Intent(getApplicationContext(), invitations.class);
+                intent.putExtra("id",id);
+                intent.putExtra("name",name);
+                intent.putExtra("email",email);
+                intent.putExtra("sport",sport);
+                startActivity(intent);
+            }else if (drawerItem.getIdentifier() == 6) {
+                intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.putExtra("id",id);
+                intent.putExtra("name",name);
+                intent.putExtra("email",email);
+                intent.putExtra("sport",sport);
+                startActivity(intent);
+            }
+        }
     }
 
     private void buildHeader(boolean compact, Bundle savedInstanceState) {
@@ -206,7 +206,7 @@ public class DashboardActivity extends AppCompatActivity {
         TextView label = findViewById(R.id.labelRankings);
         label.setText("Basketball Rankings");
         try{
-            String address = "http://192.168.43.222/bwas_damlag_web/dashboardRetrieve.php";
+            String address = "https://buasdamlag.000webhostapp.com/dashboardRetrieve.php";
             URL url = new URL(address);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -256,7 +256,7 @@ public class DashboardActivity extends AppCompatActivity {
         TextView label = findViewById(R.id.labelRankings);
         label.setText("Volleyball Rankings");
         try{
-            String address = "http://192.168.43.222/bwas_damlag_web/dashboardRetrieveVolleyball.php";
+            String address = "https://buasdamlag.000webhostapp.com/dashboardRetrieveVolleyball.php";
             URL url = new URL(address);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");

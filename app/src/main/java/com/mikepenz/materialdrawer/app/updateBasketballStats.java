@@ -25,7 +25,6 @@ public class updateBasketballStats extends AppCompatActivity {
     String positionSpin;
     Button btnUpdateStats;
     DashboardActivity DA = new DashboardActivity();
-    String URL= DA.URL1;
     JSONParser jsonParser=new JSONParser();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +100,7 @@ public class updateBasketballStats extends AppCompatActivity {
         @Override
 
         protected JSONObject doInBackground(String... args) {
-            URL = URL.concat("updateBasketBallStats.php");
+            String URL = "https://buasdamlag.000webhostapp.com/updateBasketBallStats.php";
             String id = args[10];
             String minutes = args[9];
             String points = args[0];
