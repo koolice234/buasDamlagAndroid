@@ -58,10 +58,10 @@
 
                             <TextView
                                 android:id="@+id/textView17"
-                                android:layout_width="match_parent"
+                                android:layout_width="150dp"
                                 android:layout_height="61dp"
                                 android:layout_weight="0"
-                                android:text="USLS"
+                                android:text="UNIVERSITY OF SAINT LA SALLE"
                                 android:textColor="@color/accent"
                                 android:textStyle="bold" />
 
@@ -117,10 +117,10 @@
 
                             <TextView
                                 android:id="@+id/textView17"
-                                android:layout_width="match_parent"
+                                android:layout_width="152dp"
                                 android:layout_height="63dp"
                                 android:layout_weight="0"
-                                android:text="UNO-R"
+                                android:text="UNIVERSITY OF NEGROS OCCIDENTAL - RECOLETOS"
                                 android:textColor="@color/accent"
                                 android:textStyle="bold" />
 
@@ -176,10 +176,10 @@
 
                             <TextView
                                 android:id="@+id/textView17"
-                                android:layout_width="match_parent"
+                                android:layout_width="154dp"
                                 android:layout_height="66dp"
                                 android:layout_weight="0"
-                                android:text="STI-WEST NEGROS"
+                                android:text="STI-WEST NEGROS UNIVERSITY"
                                 android:textColor="@color/accent"
                                 android:textStyle="bold" />
 
@@ -234,10 +234,10 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="70dp"
+                                android:layout_width="138dp"
+                                android:layout_height="67dp"
                                 android:layout_weight="0"
-                                android:text="CSA-B"
+                                android:text="COLEGIO SAN AGUSTIN - BACOLOD"
                                 android:textColor="@color/accent"
                                 android:textStyle="bold" />
 
