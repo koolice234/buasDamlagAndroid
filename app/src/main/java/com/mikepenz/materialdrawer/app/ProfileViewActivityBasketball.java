@@ -105,6 +105,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
 
     }
 
+
     private void buildHeader(boolean compact, Bundle savedInstanceState) {
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
@@ -114,6 +115,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                 .addProfiles(profile)
                 .withSavedInstance(savedInstanceState)
                 .build();
+
     }
 
     private class GetUserDetails extends AsyncTask<String, String, JSONObject> {
