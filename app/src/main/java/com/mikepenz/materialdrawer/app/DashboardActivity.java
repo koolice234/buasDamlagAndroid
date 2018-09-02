@@ -182,7 +182,7 @@ public class DashboardActivity extends AppCompatActivity {
                 intent.putExtra("sport",sport);
                 startActivity(intent);
             }else if (drawerItem.getIdentifier() == 6) {
-                intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent = new Intent(getApplicationContext(), iqtest.class);
                 intent.putExtra("id",id);
                 intent.putExtra("name",name);
                 intent.putExtra("email",email);
