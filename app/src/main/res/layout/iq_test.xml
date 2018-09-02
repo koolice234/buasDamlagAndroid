@@ -91,11 +91,11 @@
             android:id="@+id/quit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/choice3"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
             android:background="#B71C1C"
             android:padding="8dp"
-            android:text="quit"
+            android:text="SUBMIT"
             android:textColor="#fff" />
 
     </RelativeLayout>

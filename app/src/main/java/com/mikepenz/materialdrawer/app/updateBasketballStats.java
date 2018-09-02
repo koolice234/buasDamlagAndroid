@@ -138,7 +138,7 @@ public class updateBasketballStats extends AppCompatActivity {
             try {
                 if (result != null) {
                     Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
-                    String id= getIntent().getStringExtra("id");
+                    String id = getIntent().getStringExtra("id");
                     String name= getIntent().getStringExtra("name");
                     String email= getIntent().getStringExtra("email");
                     Intent intent = null;

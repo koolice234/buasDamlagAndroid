@@ -1,16 +1,22 @@
 package com.mikepenz.materialdrawer.app;
 
 import android.app.DatePickerDialog;
+import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,28 +30,36 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.squareup.picasso.Downloader;
+
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class updateProfile extends AppCompatActivity {
     private AccountHeader headerResult = null;
     private Drawer result = null;
-    Button  btnUpdate;
+    Button  btnUpdate, btnUpload;
     DatePickerDialog picker;
     private IProfile profile;
+    Bitmap bitmap, decoded;
     String URL= "https://buasdamlag.000webhostapp.com/profileRetrieve.php";
     String URLUpdate= "https://buasdamlag.000webhostapp.com/updateProfile.php";
     JSONParser jsonParser=new JSONParser();
+    EditText txt_name;
+    private String KEY_IMAGE = "image";
+    private String KEY_NAME = "name";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String id= getIntent().getStringExtra("id");
         String name= getIntent().getStringExtra("name");
         String email= getIntent().getStringExtra("email");
         String sport= getIntent().getStringExtra("sport");
+
         updateProfile.GetUserDetails getUserDetails= new updateProfile.GetUserDetails();
         getUserDetails.execute(id);
         super.onCreate(savedInstanceState);
@@ -57,7 +71,9 @@ public class updateProfile extends AppCompatActivity {
         final TextView contactText =  findViewById(R.id.editContact);
         final TextView addressText =  findViewById(R.id.editAddress);
         final TextView birthdayText = findViewById(R.id.editBirthday);
+
         btnUpdate = findViewById(R.id.updateBtn);
+        btnUpload = findViewById(R.id.uploadBtn);
 
         String[] gender = new String[]{"Gender","Male", "Female"};
         ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, gender);
@@ -92,6 +108,14 @@ public class updateProfile extends AppCompatActivity {
                 picker.show();
             }
         });
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                showFileChooser();
+            }
+        });
+
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,6 +185,22 @@ public class updateProfile extends AppCompatActivity {
                 .addProfiles(profile)
                 .withSavedInstance(savedInstanceState)
                 .build();
+    }
+
+    public String getStringImage(Bitmap bmp) {
+        int bitmap_size = 60; // range 1 - 100
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, bitmap_size, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+    private void showFileChooser() {
+        int PICK_IMAGE_REQUEST = 1;
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
     private class GetUserDetails extends AsyncTask<String, String, JSONObject> {

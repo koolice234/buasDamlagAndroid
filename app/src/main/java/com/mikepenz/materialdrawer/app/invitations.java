@@ -53,32 +53,33 @@ public class invitations extends AppCompatActivity {
         String id= getIntent().getStringExtra("id");
         final String name= getIntent().getStringExtra("name");
         final String email= getIntent().getStringExtra("email");
+        final String message= getIntent().getStringExtra("message");
         final String sport = getIntent().getStringExtra("sport");
         // Handle Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.drawer_item_advanced_drawer);
-        lv=findViewById(R.id.listView1);
+        lv=findViewById(R.id.invitationsList);
         lv.setClickable(true);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Integer selectionID = Integer.parseInt(invitationsID.get(position));
                 String select = selectionID.toString();
-                    Intent intent = null;
-                    intent = new Intent(getApplicationContext(), viewInvitations.class);
-                    intent.putExtra("RowID", select);
-                    intent.putExtra("name", name);
-                    intent.putExtra("email", email);
-                    intent.putExtra("sport", sport);
-                    startActivity(intent);
+                Intent intent = null;
+                intent = new Intent(getApplicationContext(), viewInvitations.class);
+                intent.putExtra("RowID", select);
+                intent.putExtra("name", name);
+                intent.putExtra("message", message);
+                intent.putExtra("sport", sport);
+                startActivity(intent);
             }
         });
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
 
-            getData();
-            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
-            lv.setAdapter(adapter);
+        getData();
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
+        lv.setAdapter(adapter);
 
         // Create a few sample profile
         profile = new ProfileDrawerItem().withName(name).withEmail(email).withIcon(getResources().getDrawable(R.drawable.profile3)).withIdentifier(2);
@@ -105,74 +106,7 @@ public class invitations extends AppCompatActivity {
                 ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if (drawerItem != null) {
-                            String id= getIntent().getStringExtra("id");
-                            String name= getIntent().getStringExtra("name");
-                            String email= getIntent().getStringExtra("email");
-                            String sport = getIntent().getStringExtra("sport");
-                            Intent intent = null;
-                            if (drawerItem.getIdentifier() == 1) {
-                                intent = new Intent(getApplicationContext(),DashboardActivity.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            } else if (drawerItem.getIdentifier() == 2) {
-                                if(sport.equals("Basketball")){
-                                    intent = new Intent(getApplicationContext(),ProfileViewActivityBasketball.class);
-                                    intent.putExtra("id",id);
-                                    intent.putExtra("name",name);
-                                    intent.putExtra("email",email);
-                                    intent.putExtra("sport",sport);
-                                    startActivity(intent);
-                                }else{
-                                    intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
-                                    intent.putExtra("id",id);
-                                    intent.putExtra("name",name);
-                                    intent.putExtra("email",email);
-                                    intent.putExtra("sport",sport);
-                                    startActivity(intent);
-                                }
-                            } else if (drawerItem.getIdentifier() == 3) {
-                                intent = new Intent(invitations.this, DashboardActivity.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            } else if (drawerItem.getIdentifier() == 4) {
-                                intent = new Intent(invitations.this, DashboardActivity.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }else if (drawerItem.getIdentifier() == 5) {
-                                intent = new Intent(invitations.this, invitations.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }else if (drawerItem.getIdentifier() == 6) {
-                                intent = new Intent(invitations.this, LoginActivity.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }else if (drawerItem.getIdentifier() == 7) {
-                                intent = new Intent(invitations.this, LoginActivity.class);
-                                intent.putExtra("id", id);
-                                intent.putExtra("name", name);
-                                intent.putExtra("email", email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }if (intent != null) {
-                                invitations.this.startActivity(intent);
-                            }
-                        }
+                        DA.sidebar(drawerItem);
 
                         return false;
                     }
@@ -243,4 +177,3 @@ public class invitations extends AppCompatActivity {
     }
 
 }
-

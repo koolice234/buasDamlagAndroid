@@ -109,6 +109,11 @@
             android:label="@string/app_name"
             android:theme="@style/MaterialDrawerTheme">
         </activity>
+        <activity
+            android:name=".viewInvitations"
+            android:label="@string/app_name"
+            android:theme="@style/MaterialDrawerTheme">
+        </activity>
     </application>
 
 </manifest>

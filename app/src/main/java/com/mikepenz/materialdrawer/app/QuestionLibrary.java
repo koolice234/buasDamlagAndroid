@@ -33,12 +33,12 @@ public class QuestionLibrary {
             {"C lied, B cheated", "B lied, B cheated", "A lied, C cheated"},
             {"Book", "Pen", "Stamp"},
             {"21", "23", "25"},
-            {"", "", ""}
+            {" ", " ", " "}
     };
 
 
 
-    private String mCorrectAnswers[] = {"9", "15264", "312", "True", "24", "4", "225", "A lied, C cheated", "Book", "23"};
+    private String mCorrectAnswers[] = {"9", "15264", "312", "True", "24", "4", "225", "A lied, C cheated", "Book", "23", " "};
 
 
 
