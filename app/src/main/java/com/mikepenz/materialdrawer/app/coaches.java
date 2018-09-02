@@ -33,7 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class DashboardActivity extends AppCompatActivity {
+public class coaches extends AppCompatActivity {
 
     private AccountHeader headerResult = null;
     private Drawer result = null;
@@ -43,12 +43,13 @@ public class DashboardActivity extends AppCompatActivity {
     String line = null;
     String result1 = null;
     InputStream is = null;
-    final ArrayList<String> athleteIDArray = new ArrayList<String>(); // List of Athlete ID's
+    DashboardActivity DA = new DashboardActivity();
+    final ArrayList<String> coachIDArray = new ArrayList<String>(); // List of Athlete ID's
     String[] data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.coaches);
         String id= getIntent().getStringExtra("id");
         final String name= getIntent().getStringExtra("name");
         final String email= getIntent().getStringExtra("email");
@@ -58,26 +59,15 @@ public class DashboardActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Integer selectionID = Integer.parseInt(athleteIDArray.get(position));
+                Integer selectionID = Integer.parseInt(coachIDArray.get(position));
                 String select = selectionID.toString();
-                if (sport.equals("Basketball")){
-                    Intent intent = null;
-                    intent = new Intent(getApplicationContext(),viewProfile.class);
-                    intent.putExtra("RowID",select);
-                    intent.putExtra("name",name);
-                    intent.putExtra("email",email);
-                    intent.putExtra("sport",sport);
-                    startActivity(intent);
-                }else{
-
-                    Intent intent = null;
-                    intent = new Intent(getApplicationContext(),viewProfileVolleyball.class);
-                    intent.putExtra("RowID",select);
-                    intent.putExtra("name",name);
-                    intent.putExtra("email",email);
-                    intent.putExtra("sport",sport);
-                    startActivity(intent);
-                }
+                Intent intent = null;
+                intent = new Intent(getApplicationContext(),viewCoachesProfile.class);
+                intent.putExtra("RowID",select);
+                intent.putExtra("name",name);
+                intent.putExtra("email",email);
+                intent.putExtra("sport",sport);
+                startActivity(intent);
             }
         });
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
@@ -120,7 +110,7 @@ public class DashboardActivity extends AppCompatActivity {
                 ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                            sidebar(drawerItem);
+                        DA.sidebar(drawerItem);
                         return false;
                     }
                 })
@@ -128,68 +118,6 @@ public class DashboardActivity extends AppCompatActivity {
                 .build();
 
 
-    }
-    public void sidebar(IDrawerItem drawerItem){
-
-        if (drawerItem != null) {
-            String id= getIntent().getStringExtra("id");
-            String name= getIntent().getStringExtra("name");
-            String email= getIntent().getStringExtra("email");
-            String sport = getIntent().getStringExtra("sport");
-            Intent intent = null;
-            if (drawerItem.getIdentifier() == 1) {
-                intent = new Intent(getApplicationContext(),DashboardActivity.class);
-                intent.putExtra("id",id);
-                intent.putExtra("name",name);
-                intent.putExtra("email",email);
-                intent.putExtra("sport",sport);
-                startActivity(intent);
-            } else if (drawerItem.getIdentifier() == 2) {
-                if(sport.equals("Basketball")){
-                    intent = new Intent(getApplicationContext(),ProfileViewActivityBasketball.class);
-                    intent.putExtra("id",id);
-                    intent.putExtra("name",name);
-                    intent.putExtra("email",email);
-                    intent.putExtra("sport",sport);
-                    startActivity(intent);
-                }else{
-                    intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
-                    intent.putExtra("id",id);
-                    intent.putExtra("name",name);
-                    intent.putExtra("email",email);
-                    intent.putExtra("sport",sport);
-                    startActivity(intent);
-                }
-            } else if (drawerItem.getIdentifier() == 3) {
-                intent = new Intent(getApplicationContext(),schools.class);
-                intent.putExtra("id",id);
-                intent.putExtra("name",name);
-                intent.putExtra("email",email);
-                intent.putExtra("sport",sport);
-                startActivity(intent);
-            } else if (drawerItem.getIdentifier() == 4) {
-                intent = new Intent(getApplicationContext(), coaches.class);
-                intent.putExtra("id",id);
-                intent.putExtra("name",name);
-                intent.putExtra("email",email);
-                intent.putExtra("sport",sport);
-                startActivity(intent);
-            }else if (drawerItem.getIdentifier() == 5) {
-                intent = new Intent(getApplicationContext(), invitations.class);
-                intent.putExtra("id",id);
-                intent.putExtra("name",name);
-                intent.putExtra("email",email);
-                intent.putExtra("sport",sport);
-                startActivity(intent);
-            }else if (drawerItem.getIdentifier() == 6) {
-                intent = new Intent(getApplicationContext(), iqtest.class);
-                intent.putExtra("id",id);
-                intent.putExtra("name",name);
-                intent.putExtra("email",email);
-                intent.putExtra("sport",sport);
-                startActivity(intent);
-            }
-        }
     }
 
     private void buildHeader(boolean compact, Bundle savedInstanceState) {
@@ -203,10 +131,10 @@ public class DashboardActivity extends AppCompatActivity {
                 .build();
     }
     private void getData(){
-        TextView label = findViewById(R.id.labelRankings);
-        label.setText("Basketball Rankings");
+        TextView label = findViewById(R.id.labelCoaches);
+        label.setText("Basketball Coaches");
         try{
-            String address = "https://buasdamlag.000webhostapp.com/dashboardRetrieve.php";
+            String address = "https://buasdamlag.000webhostapp.com/basketballCoachesRetrieve.php";
             URL url = new URL(address);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -243,7 +171,7 @@ public class DashboardActivity extends AppCompatActivity {
             {
                 jo=ja.getJSONObject(i);
                 data[i] = jo.getString("name");
-                athleteIDArray.add(jo.getString("id"));
+                coachIDArray.add(jo.getString("id"));
             }
 
         }catch (Exception e){
@@ -253,10 +181,10 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void getDataVolleyball(){
-        TextView label = findViewById(R.id.labelRankings);
-        label.setText("Volleyball Rankings");
+        TextView label = findViewById(R.id.labelCoaches);
+        label.setText("Volleyball Coaches");
         try{
-            String address = "https://buasdamlag.000webhostapp.com/dashboardRetrieveVolleyball.php";
+            String address = "https://buasdamlag.000webhostapp.com/volleyballCoachesRetrieve.php";
             URL url = new URL(address);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -293,7 +221,7 @@ public class DashboardActivity extends AppCompatActivity {
             {
                 jo=ja.getJSONObject(i);
                 data[i] = jo.getString("name");
-                athleteIDArray.add(jo.getString("id"));
+                coachIDArray.add(jo.getString("id"));
             }
 
         }catch (Exception e){
