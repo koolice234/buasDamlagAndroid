@@ -49,7 +49,7 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-        String id= getIntent().getStringExtra("id");
+        final String id = getIntent().getStringExtra("id");
         final String name= getIntent().getStringExtra("name");
         final String email= getIntent().getStringExtra("email");
         final String sport = getIntent().getStringExtra("sport");
@@ -132,12 +132,13 @@ public class DashboardActivity extends AppCompatActivity {
     public void sidebar(IDrawerItem drawerItem){
 
         if (drawerItem != null) {
-            String id= getIntent().getStringExtra("id");
+            String id = getIntent().getStringExtra("id");
             String name= getIntent().getStringExtra("name");
             String email= getIntent().getStringExtra("email");
             String sport = getIntent().getStringExtra("sport");
-            Intent intent = null;
+
             if (drawerItem.getIdentifier() == 1) {
+                Intent intent = null;
                 intent = new Intent(getApplicationContext(),DashboardActivity.class);
                 intent.putExtra("id",id);
                 intent.putExtra("name",name);
@@ -146,6 +147,7 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(intent);
             } else if (drawerItem.getIdentifier() == 2) {
                 if(sport.equals("Basketball")){
+                    Intent intent = null;
                     intent = new Intent(getApplicationContext(),ProfileViewActivityBasketball.class);
                     intent.putExtra("id",id);
                     intent.putExtra("name",name);
@@ -153,6 +155,7 @@ public class DashboardActivity extends AppCompatActivity {
                     intent.putExtra("sport",sport);
                     startActivity(intent);
                 }else{
+                    Intent intent = null;
                     intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
                     intent.putExtra("id",id);
                     intent.putExtra("name",name);
@@ -161,6 +164,7 @@ public class DashboardActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             } else if (drawerItem.getIdentifier() == 3) {
+                Intent intent = null;
                 intent = new Intent(getApplicationContext(),schools.class);
                 intent.putExtra("id",id);
                 intent.putExtra("name",name);
@@ -168,6 +172,7 @@ public class DashboardActivity extends AppCompatActivity {
                 intent.putExtra("sport",sport);
                 startActivity(intent);
             } else if (drawerItem.getIdentifier() == 4) {
+                Intent intent = null;
                 intent = new Intent(getApplicationContext(), coaches.class);
                 intent.putExtra("id",id);
                 intent.putExtra("name",name);
@@ -175,6 +180,7 @@ public class DashboardActivity extends AppCompatActivity {
                 intent.putExtra("sport",sport);
                 startActivity(intent);
             }else if (drawerItem.getIdentifier() == 5) {
+                Intent intent = null;
                 intent = new Intent(getApplicationContext(), invitations.class);
                 intent.putExtra("id",id);
                 intent.putExtra("name",name);
@@ -182,6 +188,7 @@ public class DashboardActivity extends AppCompatActivity {
                 intent.putExtra("sport",sport);
                 startActivity(intent);
             }else if (drawerItem.getIdentifier() == 6) {
+                Intent intent = null;
                 intent = new Intent(getApplicationContext(), iqtest.class);
                 intent.putExtra("id",id);
                 intent.putExtra("name",name);

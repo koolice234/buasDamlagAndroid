@@ -102,9 +102,6 @@ public class iqtest extends AppCompatActivity {
         //End of Button Listener for Button3
 
 
-
-
-
     }
 
     private void updateQuestion(){

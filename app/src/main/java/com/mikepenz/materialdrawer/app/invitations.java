@@ -97,7 +97,6 @@ public class invitations extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_male).withIdentifier(2),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_invitations).withIcon(FontAwesome.Icon.faw_facebook_messenger).withIdentifier(5),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_iq).withIcon(FontAwesome.Icon.faw_question).withIdentifier(6),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_applications).withIcon(FontAwesome.Icon.faw_tasks).withIdentifier(7),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_school).withIcon(FontAwesome.Icon.faw_building).withIdentifier(3),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_coach).withIcon(FontAwesome.Icon.faw_play).withIdentifier(4)
                 ) // add the items we want to use with our Drawer
@@ -106,8 +105,72 @@ public class invitations extends AppCompatActivity {
                 ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        DA.sidebar(drawerItem);
+                        if (drawerItem != null) {
+                            String id = getIntent().getStringExtra("id");
+                            String name= getIntent().getStringExtra("name");
+                            String email= getIntent().getStringExtra("email");
+                            String sport = getIntent().getStringExtra("sport");
 
+                            if (drawerItem.getIdentifier() == 1) {
+                                Intent intent = null;
+                                intent = new Intent(getApplicationContext(),DashboardActivity.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
+                                startActivity(intent);
+                            } else if (drawerItem.getIdentifier() == 2) {
+                                if(sport.equals("Basketball")){
+                                    Intent intent = null;
+                                    intent = new Intent(getApplicationContext(),ProfileViewActivityBasketball.class);
+                                    intent.putExtra("id",id);
+                                    intent.putExtra("name",name);
+                                    intent.putExtra("email",email);
+                                    intent.putExtra("sport",sport);
+                                    startActivity(intent);
+                                }else{
+                                    Intent intent = null;
+                                    intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
+                                    intent.putExtra("id",id);
+                                    intent.putExtra("name",name);
+                                    intent.putExtra("email",email);
+                                    intent.putExtra("sport",sport);
+                                    startActivity(intent);
+                                }
+                            } else if (drawerItem.getIdentifier() == 3) {
+                                Intent intent = null;
+                                intent = new Intent(getApplicationContext(),schools.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
+                                startActivity(intent);
+                            } else if (drawerItem.getIdentifier() == 4) {
+                                Intent intent = null;
+                                intent = new Intent(getApplicationContext(), coaches.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
+                                startActivity(intent);
+                            }else if (drawerItem.getIdentifier() == 5) {
+                                Intent intent = null;
+                                intent = new Intent(getApplicationContext(), invitations.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
+                                startActivity(intent);
+                            }else if (drawerItem.getIdentifier() == 6) {
+                                Intent intent = null;
+                                intent = new Intent(getApplicationContext(), iqtest.class);
+                                intent.putExtra("id",id);
+                                intent.putExtra("name",name);
+                                intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
+                                startActivity(intent);
+                            }
+                        }
                         return false;
                     }
                 })
