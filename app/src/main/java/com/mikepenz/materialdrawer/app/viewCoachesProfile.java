@@ -113,7 +113,7 @@ public class viewCoachesProfile extends AppCompatActivity {
                     schoolText.setText(result.getString("school"));
                     sportText.setText(result.getString("sport"));
                     String image = result.getString("image");
-                    if(image.equals(null)){
+                    if(image.isEmpty()){
                         URL newurl = null;
                         try {
                             newurl = new URL("https://buasdamlag.000webhostapp.com/uploads/default.png");
