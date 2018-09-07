@@ -112,19 +112,37 @@ public class viewCoachesProfile extends AppCompatActivity {
                     birthdayText.setText(result.getString("birthdate"));
                     schoolText.setText(result.getString("school"));
                     sportText.setText(result.getString("sport"));
-                    URL newurl = null;
-                    try {
-                        newurl = new URL(result.getString("image"));
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
+                    String image = result.getString("image");
+                    if(image.equals(null)){
+                        URL newurl = null;
+                        try {
+                            newurl = new URL("https://buasdamlag.000webhostapp.com/uploads/default.png");
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
+                        Bitmap mIcon_val = null;
+                        try {
+                            mIcon_val = BitmapFactory.decodeStream(newurl.openConnection() .getInputStream());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        profilePic.setImageBitmap(mIcon_val);
+                    }else{
+                        URL newurl = null;
+                        try {
+                            newurl = new URL(result.getString("image"));
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
+                        Bitmap mIcon_val = null;
+                        try {
+                            mIcon_val = BitmapFactory.decodeStream(newurl.openConnection() .getInputStream());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        profilePic.setImageBitmap(mIcon_val);
                     }
-                    Bitmap mIcon_val = null;
-                    try {
-                        mIcon_val = BitmapFactory.decodeStream(newurl.openConnection() .getInputStream());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    profilePic.setImageBitmap(mIcon_val);
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
                 }

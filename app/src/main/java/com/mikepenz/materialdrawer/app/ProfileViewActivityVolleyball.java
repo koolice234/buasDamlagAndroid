@@ -1,11 +1,14 @@
 package com.mikepenz.materialdrawer.app;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -261,6 +264,37 @@ public class ProfileViewActivityVolleyball extends AppCompatActivity {
                     DigsText.setText(result.getString("digs"));
                     BlocksText.setText(result.getString("blocks"));
                     TotalGamesText.setText(result.getString("games"));
+                    WebView mWebView =  findViewById(R.id.videoProfile);
+                    String videoUrl = result.getString("youtube");
+                    // WebViewの設定
+                    WebSettings settings = mWebView.getSettings();
+                    settings.setJavaScriptEnabled(true);
+                    settings.setAllowFileAccess(true);
+                    mWebView.setBackgroundColor(Color.TRANSPARENT);
+                    String html = "";
+                    html += "<html><body>";
+                    html += "<style>\n" +
+                            ".video-container { \n" +
+                            "position: relative; \n" +
+                            "padding-bottom: 56.25%; \n" +
+                            "padding-top: 35px; \n" +
+                            "height: 0; \n" +
+                            "overflow: hidden; \n" +
+                            "}\n" +
+                            ".video-container iframe { \n" +
+                            "position: absolute; \n" +
+                            "top:0; \n" +
+                            "left: 0; \n" +
+                            "width: 100%; \n" +
+                            "height: 100%; \n" +
+                            "}\n" +
+                            "</style>" +
+                            "<div class=\"video-container\">\n" +
+                            "<iframe width=\"560\" height=\"315\" src=\""+videoUrl+"\" frameborder=\"0\" allowfullscreen></iframe>"+
+                            "</div>" ;
+                    html += "</body></html>";
+
+                    mWebView.loadData(html, "text/html", null);
 
 
 
