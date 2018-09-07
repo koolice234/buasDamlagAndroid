@@ -71,6 +71,7 @@ public class updateProfile extends AppCompatActivity {
         final TextView contactText =  findViewById(R.id.editContact);
         final TextView addressText =  findViewById(R.id.editAddress);
         final TextView birthdayText = findViewById(R.id.editBirthday);
+        final TextView videoURL = findViewById(R.id.editURL);
 
         btnUpdate = findViewById(R.id.updateBtn);
         btnUpload = findViewById(R.id.uploadBtn);
@@ -130,7 +131,8 @@ public class updateProfile extends AppCompatActivity {
                         birthdayText.getText().toString(),
                         emailText.getText().toString(),
                         genderDropdown.getSelectedItem().toString(),
-                        schoolDropdown.getSelectedItem().toString());
+                        schoolDropdown.getSelectedItem().toString(),
+                        videoURL.getText().toString());
             }
         });
         // Handle Toolbar
@@ -280,6 +282,7 @@ public class updateProfile extends AppCompatActivity {
             String email = args[5];
             String gender = args[6];
             String school = args[7];
+            String urlVideo = args[8];
 
 
             ArrayList params = new ArrayList();
@@ -292,6 +295,7 @@ public class updateProfile extends AppCompatActivity {
             params.add(new BasicNameValuePair("email",email));
             params.add(new BasicNameValuePair("gender",gender));
             params.add(new BasicNameValuePair("school",school));
+            params.add(new BasicNameValuePair("youtube",urlVideo));
 
             JSONObject json = jsonParser.makeHttpRequest(URLUpdate, "POST", params);
 
