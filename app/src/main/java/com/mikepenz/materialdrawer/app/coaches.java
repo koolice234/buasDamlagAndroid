@@ -44,19 +44,18 @@ public class coaches extends AppCompatActivity {
     String line = null;
     String result1 = null;
     InputStream is = null;
-    DashboardActivity DA = new DashboardActivity();
     final ArrayList<String> coachIDArray = new ArrayList<String>(); // List of Athlete ID's
     String[] data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.coaches);
+        setContentView(R.layout.coaches); //kwaon ang layout ka coaches.xml
         String id= getIntent().getStringExtra("id");
         final String name= getIntent().getStringExtra("name");
         final String email= getIntent().getStringExtra("email");
-        final String sport = getIntent().getStringExtra("sport");
-        lv=findViewById(R.id.listView1);
-        lv.setClickable(true);
+        final String sport = getIntent().getStringExtra("sport"); //retrieve ang data nga gin pasa sa diri nga class
+        lv=findViewById(R.id.listView1); //list view meaning ang view sang mga coaches
+        lv.setClickable(true); // pwede ma click ang listView
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -70,20 +69,20 @@ public class coaches extends AppCompatActivity {
                 intent.putExtra("sport",sport);
                 startActivity(intent);
             }
-        });
+        });// kung mag click sang ara sa listView makadto sa ViewCoachesProfile.java kag i pass ang ara sa intent nga data
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-        if(sport.equals("Basketball")){
+        if(sport.equals("Basketball")){ //kung basketball ipakita lang ang basketball nga coaches kag butang sa data nga array kag ang unod ka array butang sa listView
             getData();
             adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
             lv.setAdapter(adapter);
         }
-        if(sport.equals("Volleyball")){
+        if(sport.equals("Volleyball")){//kung volleyball ipakita lang ang volleyball nga coaches kag butang sa data nga array kag ang unod ka array butang sa listView
             getDataVolleyball();
             adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
             lv.setAdapter(adapter);
         }
 
-        // Create a few sample profile
+        //sidebar details ni ang profile amo ni ang gagwa sa kilid nga picture kag ngalan
         profile = new ProfileDrawerItem().withName(name).withEmail(email).withIcon(getResources().getDrawable(R.drawable.profile3)).withIdentifier(2);
 
         // Handle Toolbar
@@ -93,7 +92,7 @@ public class coaches extends AppCompatActivity {
         // Create the AccountHeader
         buildHeader(false, savedInstanceState);
 
-        //Create the drawer
+        //Create the drawer ang drawer amo ni ang unod ka sidebar if lantawon mo ang addDrawerItems may mga number ga reflect na sa if else sa dalom nga getIdentifier
         result = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
@@ -193,7 +192,7 @@ public class coaches extends AppCompatActivity {
 
 
     }
-
+    //i build ya na ang header mo ang toolbar kag sidebar
     private void buildHeader(boolean compact, Bundle savedInstanceState) {
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
@@ -204,11 +203,11 @@ public class coaches extends AppCompatActivity {
                 .withSavedInstance(savedInstanceState)
                 .build();
     }
-    private void getData(){
+    private void getData(){ //ang amo ni nga function ma kadto sa address nga basketballCoaches sa web kag mag get sang mga list of coaches nga basketball lang
         TextView label = findViewById(R.id.labelCoaches);
         label.setText("Basketball Coaches");
         try{
-            String address = "https://buasdamlag.000webhostapp.com/basketballCoachesRetrieve.php";
+            String address = "https://buasdamlag.000webhostapp.com/basketballCoachesRetrieve.php"; //url sang
             URL url = new URL(address);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -254,7 +253,7 @@ public class coaches extends AppCompatActivity {
 
     }
 
-    private void getDataVolleyball(){
+    private void getDataVolleyball(){ //ang amo ni nga function ma kadto sa address nga basketballCoaches sa web kag mag get sang mga list of coaches nga volleyball lang
         TextView label = findViewById(R.id.labelCoaches);
         label.setText("Volleyball Coaches");
         try{

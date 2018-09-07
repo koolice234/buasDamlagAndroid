@@ -76,10 +76,18 @@ public class invitations extends AppCompatActivity {
             }
         });
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-
-        getData();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
-        lv.setAdapter(adapter);
+        if(sport.equals("Basketball")){
+            getData();
+        }else{
+            getDataVolleyball();
+        }
+        if(data!=null && data.length>0) {
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
+            lv.setAdapter(adapter);
+        }else{
+            View empty = findViewById(R.id.invitationsList);
+            lv.setEmptyView(empty);
+        }
 
         // Create a few sample profile
         profile = new ProfileDrawerItem().withName(name).withEmail(email).withIcon(getResources().getDrawable(R.drawable.profile3)).withIdentifier(2);
@@ -200,8 +208,9 @@ public class invitations extends AppCompatActivity {
     }
     private void getData(){
         TextView label = findViewById(R.id.labelRankings);
+        String id = getIntent().getStringExtra("id");
         try{
-            String URL = "https://buasdamlag.000webhostapp.com/invitationsRetrieve.php";
+            String URL = "https://buasdamlag.000webhostapp.com/invitationsRetrieve.php?id="+id;
             URL url = new URL(URL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
@@ -247,4 +256,54 @@ public class invitations extends AppCompatActivity {
 
     }
 
+
+    private void getDataVolleyball(){
+        TextView label = findViewById(R.id.labelRankings);
+        String id = getIntent().getStringExtra("id");
+        try{
+            String URL = "https://buasdamlag.000webhostapp.com/invitationsRetrieveVolleyball.php?id="+id;
+            URL url = new URL(URL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            is = new BufferedInputStream(con.getInputStream());
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        try{
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            StringBuilder sb = new StringBuilder();
+
+            while ((line = br.readLine()) != null)
+            {
+                sb.append(line+"\n");
+            }
+
+            is.close();
+            result1 = sb.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try
+        {
+            JSONArray ja = new JSONArray(result1);
+            JSONObject jo;
+
+            data=new String[ja.length()];
+
+            for(int i=0;i<ja.length();i++)
+            {
+                jo=ja.getJSONObject(i);
+                data[i] = jo.getString("message");
+                invitationsID.add(jo.getString("id"));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 }
