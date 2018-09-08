@@ -44,7 +44,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
         String id= getIntent().getStringExtra("id");
         String name= getIntent().getStringExtra("name");
         String email= getIntent().getStringExtra("email");
-        String sport= getIntent().getStringExtra("sport");
+        String sport = getIntent().getStringExtra("sport");
         ProfileViewActivityBasketball.GetUserDetails getUserDetails= new ProfileViewActivityBasketball.GetUserDetails();
         getUserDetails.execute(id);
         super.onCreate(savedInstanceState);
@@ -64,11 +64,13 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                 String id= getIntent().getStringExtra("id");
                 String name= getIntent().getStringExtra("name");
                 String email= getIntent().getStringExtra("email");
+                String sport = getIntent().getStringExtra("sport");
                 Intent intent = null;
                 intent = new Intent(ProfileViewActivityBasketball.this, updateProfile.class);
                 intent.putExtra("id",id);
                 intent.putExtra("name",name);
                 intent.putExtra("email",email);
+                intent.putExtra("sport",sport);
                 startActivity(intent);
             }
 
@@ -172,15 +174,12 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                                 startActivity(intent);
                             }
                         }
-
                         return false;
                     }
                 })
                 .withSavedInstance(savedInstanceState)
                 .build();
-
     }
-
 
     private void buildHeader(boolean compact, Bundle savedInstanceState) {
         // Create the AccountHeader
@@ -191,7 +190,6 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                 .addProfiles(profile)
                 .withSavedInstance(savedInstanceState)
                 .build();
-
     }
 
     private class GetUserDetails extends AsyncTask<String, String, JSONObject> {
@@ -205,10 +203,9 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
         }
 
         @Override
-
         protected JSONObject doInBackground(String... args) {
 
-            String URL = "https://buasdamlag.000webhostapp.com/profileRetrieve.php";
+            String URL = "https://buasdamlag.000webhostapp.com/profileRetrieveBasketball.php";
             String id = args[0];
 
             ArrayList params = new ArrayList();
@@ -217,11 +214,12 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
 
             JSONObject json = jsonParser.makeHttpRequest(URL, "POST", params);
 
+
             return json;
 
         }
 
-        protected void onPostExecute(JSONObject result) {
+        protected void onPostExecute(JSONObject result1) {
 
             // dismiss the dialog once product deleted
             //Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
@@ -236,41 +234,41 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
             TextView sportText = findViewById(R.id.SportText);
             TextView positionText = findViewById(R.id.PositionText);
 
-            TextView pointsText = findViewById(R.id.textPoints);
-            TextView reboundsText = findViewById(R.id.textRebounds);
-            TextView assistsText = findViewById(R.id.textAssists);
-            TextView blocksText = findViewById(R.id.textBlocks);
-            TextView stealsText = findViewById(R.id.textSteals);
-            TextView turnoverText = findViewById(R.id.textTurnovers);
-            TextView foulsText = findViewById(R.id.textFouls);
-            TextView minutesText = findViewById(R.id.textMinutes);
-            TextView missedFGText = findViewById(R.id.textMissedFG);
+            TextView textPoints = findViewById(R.id.textPoints);
+            TextView textRebounds = findViewById(R.id.textRebounds);
+            TextView textAssists = findViewById(R.id.textAssists);
+            TextView textBlocks = findViewById(R.id.textBlocks);
+            TextView textSteals = findViewById(R.id.textSteals);
+            TextView textMinutes = findViewById(R.id.textMinutes);
+            TextView textFouls = findViewById(R.id.textFouls);
+            TextView textTurnovers = findViewById(R.id.textTurnovers);
+            TextView textMissedFG = findViewById(R.id.textMissedFG);
 
 
 
             try {
-                if (result != null) {
-                    nameText.setText(result.getString("name"));
-                    emailText.setText(result.getString("email"));
-                    contactText.setText(result.getString("contactNumber"));
-                    addressText.setText(result.getString("address"));
-                    genderText.setText(result.getString("gender"));
-                    birthdayText.setText(result.getString("birthdate"));
-                    schoolText.setText(result.getString("school"));
-                    sportText.setText(result.getString("sport"));
-                    positionText.setText(result.getString("position"));
+                if (result1 != null) {
+                    nameText.setText(getIntent().getStringExtra("name"));
+                    emailText.setText(result1.getString("email"));
+                    contactText.setText(result1.getString("contact"));
+                    addressText.setText(result1.getString("address"));
+                    genderText.setText(result1.getString("gender"));
+                    birthdayText.setText(result1.getString("birthdate"));
+                    schoolText.setText(result1.getString("school"));
+                    sportText.setText(result1.getString("sport"));
+                    positionText.setText(result1.getString("position"));
 
-                    pointsText.setText(result.getString("points"));
-                    reboundsText.setText(result.getString("rebounds"));
-                    assistsText.setText(result.getString("assists"));
-                    blocksText.setText(result.getString("blocks"));
-                    stealsText.setText(result.getString("steals"));
-                    turnoverText.setText(result.getString("turnover"));
-                    foulsText.setText(result.getString("fouls"));
-                    minutesText.setText(result.getString("minutes"));
-                    missedFGText.setText(result.getString("missedFG"));
+                    textPoints.setText(result1.getString("points"));
+                    textRebounds.setText(result1.getString("rebounds"));
+                    textAssists.setText(result1.getString("assists"));
+                    textBlocks.setText(result1.getString("blocks"));
+                    textSteals.setText(result1.getString("steals"));
+                    textMinutes.setText(result1.getString("minutes"));
+                    textFouls.setText(result1.getString("fouls"));
+                    textTurnovers.setText(result1.getString("turnover"));
+                    textMissedFG.setText(result1.getString("missedFG"));
                     WebView mWebView =  findViewById(R.id.videoProfile);
-                    String videoUrl = result.getString("youtube");
+                    String videoUrl = result1.getString("youtube");
                     // WebViewの設定
                     WebSettings settings = mWebView.getSettings();
                     settings.setJavaScriptEnabled(true);
@@ -303,36 +301,19 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
 
 
 
-                    if (result.getString("sport").equals("Basketball")){
+                    if (result1.getString("sport").equals("Basketball")) {
                         btnUpdateStats.setOnClickListener(new View.OnClickListener() {
 
                             @Override
                             public void onClick(View view) {
-                                String id= getIntent().getStringExtra("id");
-                                String name= getIntent().getStringExtra("name");
-                                String email= getIntent().getStringExtra("email");
+                                String id = getIntent().getStringExtra("id");
+                                String name = getIntent().getStringExtra("name");
+                                String email = getIntent().getStringExtra("email");
                                 Intent intent = null;
                                 intent = new Intent(ProfileViewActivityBasketball.this, updateBasketballStats.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                startActivity(intent);
-                            }
-
-                        });
-                    }else if(result.getString("sport").equals("Football")){
-                        btnUpdateStats.setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View view) {
-                                String id= getIntent().getStringExtra("id");
-                                String name= getIntent().getStringExtra("name");
-                                String email= getIntent().getStringExtra("email");
-                                Intent intent = null;
-                                intent = new Intent(ProfileViewActivityBasketball.this, updateFootballStats.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
+                                intent.putExtra("id", id);
+                                intent.putExtra("name", name);
+                                intent.putExtra("email", email);
                                 startActivity(intent);
                             }
 
@@ -362,9 +343,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
         }
 
     }
-
 }

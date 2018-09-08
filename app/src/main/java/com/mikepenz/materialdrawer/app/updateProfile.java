@@ -244,7 +244,7 @@ public class updateProfile extends AppCompatActivity {
                     TextView birthdayText = findViewById(R.id.editBirthday);
                     nameText.setText(result.getString("name"));
                     emailText.setText(result.getString("email"));
-                    contactText.setText(result.getString("contactNumber"));
+                    contactText.setText(result.getString("contact"));
                     addressText.setText(result.getString("address"));
                     birthdayText.setText(result.getString("birthdate"));
 

@@ -16,6 +16,7 @@ public class iqtest extends AppCompatActivity {
     private Button mButtonChoice1;
     private Button mButtonChoice2;
     private Button mButtonChoice3;
+    private Button submit;
 
     private String mAnswer;
     private int mScore = 0;
@@ -31,6 +32,7 @@ public class iqtest extends AppCompatActivity {
         mButtonChoice1 = (Button)findViewById(R.id.choice1);
         mButtonChoice2 = (Button)findViewById(R.id.choice2);
         mButtonChoice3 = (Button)findViewById(R.id.choice3);
+        submit = findViewById(R.id.quit);
 
         updateQuestion();
 
@@ -99,6 +101,13 @@ public class iqtest extends AppCompatActivity {
             }
         });
 
+        mButtonChoice1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                updateScoreToProfile(mScoreView.getText().toString());
+            }
+        });
+
         //End of Button Listener for Button3
 
 
@@ -117,5 +126,9 @@ public class iqtest extends AppCompatActivity {
 
     private void updateScore(int point) {
         mScoreView.setText("" + mScore);
+    }
+
+    private void updateScoreToProfile(String points) {
+
     }
 }
