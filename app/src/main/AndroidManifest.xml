@@ -50,21 +50,6 @@
             android:theme="@style/MaterialDrawerTheme">
         </activity>
         <activity
-            android:name=".updateVolleyballStats"
-            android:label="@string/app_name"
-            android:theme="@style/MaterialDrawerTheme">
-        </activity>
-        <activity
-            android:name=".ProfileViewActivityVolleyball"
-            android:label="@string/app_name"
-            android:theme="@style/MaterialDrawerTheme">
-        </activity>
-        <activity
-            android:name=".viewProfileVolleyball"
-            android:label="@string/app_name"
-            android:theme="@style/MaterialDrawerTheme">
-        </activity>
-        <activity
             android:name=".invitations"
             android:label="@string/app_name"
             android:theme="@style/MaterialDrawerTheme">
@@ -91,11 +76,6 @@
         </activity>
         <activity
             android:name=".stiInfo"
-            android:label="@string/app_name"
-            android:theme="@style/MaterialDrawerTheme">
-        </activity>
-        <activity
-            android:name=".iqtest"
             android:label="@string/app_name"
             android:theme="@style/MaterialDrawerTheme">
         </activity>
