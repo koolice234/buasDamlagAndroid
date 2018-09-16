@@ -127,7 +127,6 @@ public class schools extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_male).withIdentifier(2),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_invitations).withIcon(FontAwesome.Icon.faw_facebook_messenger).withIdentifier(5),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_iq).withIcon(FontAwesome.Icon.faw_question).withIdentifier(6),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_school).withIcon(FontAwesome.Icon.faw_building).withIdentifier(3),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_coach).withIcon(FontAwesome.Icon.faw_play).withIdentifier(4)
                 ) // add the items we want to use with our Drawer
@@ -159,14 +158,6 @@ public class schools extends AppCompatActivity {
                                     intent.putExtra("email",email);
                                     intent.putExtra("sport",sport);
                                     startActivity(intent);
-                                }else{
-                                    Intent intent = null;
-                                    intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
-                                    intent.putExtra("id",id);
-                                    intent.putExtra("name",name);
-                                    intent.putExtra("email",email);
-                                    intent.putExtra("sport",sport);
-                                    startActivity(intent);
                                 }
                             } else if (drawerItem.getIdentifier() == 3) {
                                 Intent intent = null;
@@ -187,14 +178,6 @@ public class schools extends AppCompatActivity {
                             }else if (drawerItem.getIdentifier() == 5) {
                                 Intent intent = null;
                                 intent = new Intent(getApplicationContext(), invitations.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }else if (drawerItem.getIdentifier() == 6) {
-                                Intent intent = null;
-                                intent = new Intent(getApplicationContext(), iqtest.class);
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);

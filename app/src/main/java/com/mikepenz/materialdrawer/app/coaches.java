@@ -76,11 +76,6 @@ public class coaches extends AppCompatActivity {
             adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
             lv.setAdapter(adapter);
         }
-        if(sport.equals("Volleyball")){//kung volleyball ipakita lang ang volleyball nga coaches kag butang sa data nga array kag ang unod ka array butang sa listView
-            getDataVolleyball();
-            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
-            lv.setAdapter(adapter);
-        }
 
         //sidebar details ni ang profile amo ni ang gagwa sa kilid nga picture kag ngalan
         profile = new ProfileDrawerItem().withName(name).withEmail(email).withIcon(getResources().getDrawable(R.drawable.profile3)).withIdentifier(2);
@@ -101,7 +96,6 @@ public class coaches extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_male).withIdentifier(2),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_invitations).withIcon(FontAwesome.Icon.faw_facebook_messenger).withIdentifier(5),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_iq).withIcon(FontAwesome.Icon.faw_question).withIdentifier(6),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_school).withIcon(FontAwesome.Icon.faw_building).withIdentifier(3),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_coach).withIcon(FontAwesome.Icon.faw_play).withIdentifier(4)
                 ) // add the items we want to use with our Drawer
@@ -133,14 +127,6 @@ public class coaches extends AppCompatActivity {
                                     intent.putExtra("email",email);
                                     intent.putExtra("sport",sport);
                                     startActivity(intent);
-                                }else{
-                                    Intent intent = null;
-                                    intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
-                                    intent.putExtra("id",id);
-                                    intent.putExtra("name",name);
-                                    intent.putExtra("email",email);
-                                    intent.putExtra("sport",sport);
-                                    startActivity(intent);
                                 }
                             } else if (drawerItem.getIdentifier() == 3) {
                                 Intent intent = null;
@@ -161,14 +147,6 @@ public class coaches extends AppCompatActivity {
                             }else if (drawerItem.getIdentifier() == 5) {
                                 Intent intent = null;
                                 intent = new Intent(getApplicationContext(), invitations.class);
-                                intent.putExtra("id",id);
-                                intent.putExtra("name",name);
-                                intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
-                                startActivity(intent);
-                            }else if (drawerItem.getIdentifier() == 6) {
-                                Intent intent = null;
-                                intent = new Intent(getApplicationContext(), iqtest.class);
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
@@ -252,58 +230,6 @@ public class coaches extends AppCompatActivity {
         }
 
     }
-
-    private void getDataVolleyball(){ //ang amo ni nga function ma kadto sa address nga basketballCoaches sa web kag mag get sang mga list of coaches nga volleyball lang
-        TextView label = findViewById(R.id.labelCoaches);
-        label.setText("Volleyball Coaches");
-        try{
-            String address = "https://buasdamlag.000webhostapp.com/volleyballCoachesRetrieve.php";
-            URL url = new URL(address);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            is = new BufferedInputStream(con.getInputStream());
-
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        try{
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
-
-            while ((line = br.readLine()) != null)
-            {
-                sb.append(line+"\n");
-            }
-
-            is.close();
-            result1 = sb.toString();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        try
-        {
-            JSONArray ja = new JSONArray(result1);
-            JSONObject jo;
-
-            data=new String[ja.length()];
-
-            for(int i=0;i<ja.length();i++)
-            {
-                jo=ja.getJSONObject(i);
-                data[i] = jo.getString("name");
-                coachIDArray.add(jo.getString("id"));
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
-
-
 
 }
 

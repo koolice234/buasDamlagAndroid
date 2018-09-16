@@ -156,7 +156,6 @@ public class updateProfile extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_male).withIdentifier(2),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_invitations).withIcon(FontAwesome.Icon.faw_facebook_messenger).withIdentifier(5),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_iq).withIcon(FontAwesome.Icon.faw_question).withIdentifier(6),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_applications).withIcon(FontAwesome.Icon.faw_tasks).withIdentifier(7),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_school).withIcon(FontAwesome.Icon.faw_building).withIdentifier(3),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_coach).withIcon(FontAwesome.Icon.faw_play).withIdentifier(4)
@@ -316,13 +315,6 @@ public class updateProfile extends AppCompatActivity {
                         if (sport.equals("Basketball")){
                             Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(),ProfileViewActivityBasketball.class);
-                            intent.putExtra("id",id);
-                            intent.putExtra("name",name);
-                            intent.putExtra("email",email);
-                            startActivity(intent);
-                        }else{
-                            Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(),ProfileViewActivityVolleyball.class);
                             intent.putExtra("id",id);
                             intent.putExtra("name",name);
                             intent.putExtra("email",email);

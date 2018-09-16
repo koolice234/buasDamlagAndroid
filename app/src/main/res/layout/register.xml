@@ -48,18 +48,10 @@
                 android:inputType="phone" />
 
             <Spinner
-                android:id="@+id/sportspinner"
-                android:layout_width="303dp"
-                android:layout_height="41dp"
-                android:layout_below="@+id/lastSchoolSpinner"
-                android:layout_centerHorizontal="true"
-                android:layout_weight="1" />
-
-            <Spinner
                 android:id="@+id/positionspinner"
                 android:layout_width="303dp"
                 android:layout_height="41dp"
-                android:layout_below="@+id/sportspinner"
+                android:layout_below="@+id/lastSchoolSpinner"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1" />
 
