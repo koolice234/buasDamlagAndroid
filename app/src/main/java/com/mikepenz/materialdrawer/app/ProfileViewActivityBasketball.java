@@ -44,7 +44,6 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
         String id= getIntent().getStringExtra("id");
         String name= getIntent().getStringExtra("name");
         String email= getIntent().getStringExtra("email");
-        String sport = getIntent().getStringExtra("sport");
         ProfileViewActivityBasketball.GetUserDetails getUserDetails= new ProfileViewActivityBasketball.GetUserDetails();
         getUserDetails.execute(id);
         super.onCreate(savedInstanceState);
@@ -64,13 +63,11 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                 String id= getIntent().getStringExtra("id");
                 String name= getIntent().getStringExtra("name");
                 String email= getIntent().getStringExtra("email");
-                String sport = getIntent().getStringExtra("sport");
                 Intent intent = null;
                 intent = new Intent(ProfileViewActivityBasketball.this, updateProfile.class);
                 intent.putExtra("id",id);
                 intent.putExtra("name",name);
                 intent.putExtra("email",email);
-                intent.putExtra("sport",sport);
                 startActivity(intent);
             }
 
@@ -103,7 +100,6 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                             String id = getIntent().getStringExtra("id");
                             String name= getIntent().getStringExtra("name");
                             String email= getIntent().getStringExtra("email");
-                            String sport = getIntent().getStringExtra("sport");
 
                             if (drawerItem.getIdentifier() == 1) {
                                 Intent intent = null;
@@ -111,25 +107,20 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
                                 startActivity(intent);
                             } else if (drawerItem.getIdentifier() == 2) {
-                                if(sport.equals("Basketball")){
                                     Intent intent = null;
                                     intent = new Intent(getApplicationContext(),ProfileViewActivityBasketball.class);
                                     intent.putExtra("id",id);
                                     intent.putExtra("name",name);
                                     intent.putExtra("email",email);
-                                    intent.putExtra("sport",sport);
                                     startActivity(intent);
-                                }
                             } else if (drawerItem.getIdentifier() == 3) {
                                 Intent intent = null;
                                 intent = new Intent(getApplicationContext(),schools.class);
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
                                 startActivity(intent);
                             } else if (drawerItem.getIdentifier() == 4) {
                                 Intent intent = null;
@@ -137,7 +128,6 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
                                 startActivity(intent);
                             }else if (drawerItem.getIdentifier() == 5) {
                                 Intent intent = null;
@@ -145,7 +135,6 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
                                 startActivity(intent);
                             }else if (drawerItem.getIdentifier() == 7) {
                                 Intent intent = null;
@@ -153,7 +142,6 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
-                                intent.putExtra("sport",sport);
                                 startActivity(intent);
                             }
                         }
@@ -214,18 +202,6 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
             TextView genderText=findViewById(R.id.GenderText);
             TextView birthdayText = findViewById(R.id.BirthdayText);
             TextView schoolText = findViewById(R.id.SchoolText);
-            TextView sportText = findViewById(R.id.SportText);
-            TextView positionText = findViewById(R.id.PositionText);
-
-            TextView textPoints = findViewById(R.id.textPoints);
-            TextView textRebounds = findViewById(R.id.textRebounds);
-            TextView textAssists = findViewById(R.id.textAssists);
-            TextView textBlocks = findViewById(R.id.textBlocks);
-            TextView textSteals = findViewById(R.id.textSteals);
-            TextView textMinutes = findViewById(R.id.textMinutes);
-            TextView textFouls = findViewById(R.id.textFouls);
-            TextView textTurnovers = findViewById(R.id.textTurnovers);
-            TextView textMissedFG = findViewById(R.id.textMissedFG);
 
 
 
@@ -238,18 +214,6 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                     genderText.setText(result1.getString("gender"));
                     birthdayText.setText(result1.getString("birthdate"));
                     schoolText.setText(result1.getString("school"));
-                    sportText.setText(result1.getString("sport"));
-                    positionText.setText(result1.getString("position"));
-
-                    textPoints.setText(result1.getString("points"));
-                    textRebounds.setText(result1.getString("rebounds"));
-                    textAssists.setText(result1.getString("assists"));
-                    textBlocks.setText(result1.getString("blocks"));
-                    textSteals.setText(result1.getString("steals"));
-                    textMinutes.setText(result1.getString("minutes"));
-                    textFouls.setText(result1.getString("fouls"));
-                    textTurnovers.setText(result1.getString("turnover"));
-                    textMissedFG.setText(result1.getString("missedFG"));
                     WebView mWebView =  findViewById(R.id.videoProfile);
                     String videoUrl = result1.getString("youtube");
                     // WebViewの設定
@@ -282,9 +246,6 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
 
                     mWebView.loadData(html, "text/html", null);
 
-
-
-                    if (result1.getString("sport").equals("Basketball")) {
                         btnUpdateStats.setOnClickListener(new View.OnClickListener() {
 
                             @Override
@@ -301,7 +262,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                             }
 
                         });
-                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
                 }

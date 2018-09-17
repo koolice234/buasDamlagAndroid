@@ -93,19 +93,9 @@ public class viewProfile extends AppCompatActivity {
             TextView genderText=findViewById(R.id.GenderText);
             TextView birthdayText = findViewById(R.id.BirthdayText);
             TextView schoolText = findViewById(R.id.SchoolText);
-            TextView sportText = findViewById(R.id.SportText);
-            TextView positionText = findViewById(R.id.PositionText);
+
 
             TextView pointsText = findViewById(R.id.textPoints);
-            TextView reboundsText = findViewById(R.id.textRebounds);
-            TextView assistsText = findViewById(R.id.textAssists);
-            TextView blocksText = findViewById(R.id.textBlocks);
-            TextView stealsText = findViewById(R.id.textSteals);
-            TextView turnoverText = findViewById(R.id.textTurnovers);
-            TextView foulsText = findViewById(R.id.textFouls);
-            TextView minutesText = findViewById(R.id.textMinutes);
-            TextView missedFGText = findViewById(R.id.textMissedFG);
-
 
 
             try {
@@ -117,18 +107,8 @@ public class viewProfile extends AppCompatActivity {
                     genderText.setText(result.getString("gender"));
                     birthdayText.setText(result.getString("birthdate"));
                     schoolText.setText(result.getString("school"));
-                    sportText.setText(result.getString("sport"));
-                    positionText.setText(result.getString("position"));
 
                     pointsText.setText(result.getString("points"));
-                    reboundsText.setText(result.getString("rebounds"));
-                    assistsText.setText(result.getString("assists"));
-                    blocksText.setText(result.getString("blocks"));
-                    stealsText.setText(result.getString("steals"));
-                    turnoverText.setText(result.getString("turnover"));
-                    foulsText.setText(result.getString("fouls"));
-                    minutesText.setText(result.getString("minutes"));
-                    missedFGText.setText(result.getString("missedFG"));
                     WebView mWebView =  findViewById(R.id.videoProfile);
                     String videoUrl = result.getString("youtube");
                     // WebViewの設定

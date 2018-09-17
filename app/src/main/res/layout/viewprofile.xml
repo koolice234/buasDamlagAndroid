@@ -137,6 +137,7 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <ListView
+                        android:id="@+id/league_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </LinearLayout>

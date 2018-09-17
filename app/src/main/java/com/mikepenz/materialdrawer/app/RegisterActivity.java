@@ -46,7 +46,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        final Spinner sportsDropdown = findViewById(R.id.sportspinner);
         final Spinner positionDropdown = findViewById(R.id.positionspinner);
         final Spinner schoolDropdown = findViewById(R.id.lastSchoolSpinner);
         final Spinner genderDropdown = findViewById(R.id.genderspinner);
@@ -86,49 +85,13 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-        String[] sports = new String[]{"Select Sport","Basketball", "Volleyball"};
-        final ArrayAdapter<String> sportsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sports);
-
         String[] basketballPosition = new String[]{"Select Position","Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Center"};
         final ArrayAdapter<String> basketballPositionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, basketballPosition);
-        String[] volleyballPosition = new String[]{"Select Position","Outside hitter", "Right Side Hitter", "Opposite Hitter", "Setter", "Middle Blocker", "Libero", "Defensive Specialist"};
-        final ArrayAdapter<String> volleyballPositionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, volleyballPosition);
-        sportsDropdown.setAdapter(sportsAdapter);
-        sportsDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
+        positionDropdown.setAdapter(basketballPositionAdapter);
+        positionDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                String sportValue = sportsDropdown.getSelectedItem().toString();
-                if(sportValue.equals("Basketball")) {
-                    positionDropdown.setAdapter(basketballPositionAdapter);
-                    positionDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                            editPosition = positionDropdown.getSelectedItem().toString();
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parentView) {
-
-                        }
-                    });
-
-                }else{
-                    positionDropdown.setAdapter(volleyballPositionAdapter);
-                    positionDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                            editPosition = positionDropdown.getSelectedItem().toString();
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parentView) {
-
-                        }
-                    });
-                }
-
-                    editSport = sportsDropdown.getSelectedItem().toString();
+                editPosition = positionDropdown.getSelectedItem().toString();
             }
 
             @Override
@@ -136,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+
 
         editEmail=findViewById(R.id.editemail);
         editName=findViewById(R.id.editname);
@@ -178,7 +142,6 @@ public class RegisterActivity extends AppCompatActivity {
                         editPassword.getText().toString(),
                         editGender,
                         editSchool,
-                        editSport,
                         editPosition);
 
             }
@@ -209,8 +172,7 @@ public class RegisterActivity extends AppCompatActivity {
             String password = args[5];
             String gender = args[6];
             String school = args[7];
-            String sport = args[8];
-            String position = args[9];
+            String position = args[8];
 
             ArrayList params = new ArrayList();
 
@@ -222,7 +184,6 @@ public class RegisterActivity extends AppCompatActivity {
             params.add(new BasicNameValuePair("password", password));
             params.add(new BasicNameValuePair("gender", gender));
             params.add(new BasicNameValuePair("school", school));
-            params.add(new BasicNameValuePair("sport", sport));
             params.add(new BasicNameValuePair("position", position));
 
             JSONObject json = jsonParser.makeHttpRequest(URL, "POST", params);

@@ -32,7 +32,7 @@ public class updateBasketballStats extends AppCompatActivity {
         String name= getIntent().getStringExtra("name");
         String email= getIntent().getStringExtra("email");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.update_basketball_stats);
+        setContentView(R.layout.tournament_update);
         final Spinner positionDropdown = findViewById(R.id.positionspinner);
         String[] positions = new String[]{"Select Position","Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Center"};
         final ArrayAdapter<String> positionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, positions);
@@ -51,7 +51,6 @@ public class updateBasketballStats extends AppCompatActivity {
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.drawer_item_advanced_drawer);
         btnUpdateStats=findViewById(R.id.updateStatsBtn);
 
         btnUpdateStats.setOnClickListener(new View.OnClickListener() {
