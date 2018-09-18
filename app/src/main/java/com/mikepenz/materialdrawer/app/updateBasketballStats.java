@@ -21,8 +21,7 @@ import java.util.ArrayList;
 public class updateBasketballStats extends AppCompatActivity {
 
     EditText points, rebounds, steals, assists, blocks;
-    EditText fouls, turnovers, missedFG, minutes;
-    String positionSpin;
+    String positionSpin, leagueSpin;
     Button btnUpdateStats;
     DashboardActivity DA = new DashboardActivity();
     JSONParser jsonParser=new JSONParser();
@@ -48,9 +47,30 @@ public class updateBasketballStats extends AppCompatActivity {
 
             }
         });
+        final Spinner leagueDropdown = findViewById(R.id.leagueSpinner);
+        String[] leagues = new String[]{"Select League or Tournament","Gasataya Cup", "Division Meet", "NOPSSCEA", "Provincial Meet", "Regional Meet", "Palarong Pambansa"};
+        final ArrayAdapter<String> leagueAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, leagues);
+        leagueDropdown.setAdapter(leagueAdapter);
+        leagueDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                leagueSpin = leagueDropdown.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+
+            }
+        });
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        points=findViewById(R.id.editPoints);
+        rebounds=findViewById(R.id.editRebounds);
+        steals =  findViewById(R.id.editSteals);
+        assists =  findViewById(R.id.editAssists);
+        blocks=findViewById(R.id.editBlocks);
+
         btnUpdateStats=findViewById(R.id.updateStatsBtn);
 
         btnUpdateStats.setOnClickListener(new View.OnClickListener() {
@@ -65,25 +85,13 @@ public class updateBasketballStats extends AppCompatActivity {
                         steals.getText().toString(),
                         assists.getText().toString(),
                         blocks.getText().toString(),
-                        fouls.getText().toString(),
-                        turnovers.getText().toString(),
-                        missedFG.getText().toString(),
                         positionSpin,
-                        minutes.getText().toString(),
+                        leagueSpin,
                         id);
             }
 
         });
 
-        points=findViewById(R.id.editPoints);
-        rebounds=findViewById(R.id.editRebounds);
-        steals =  findViewById(R.id.editSteals);
-        assists =  findViewById(R.id.editAssists);
-        blocks=findViewById(R.id.editBlocks);
-        fouls=findViewById(R.id.editFouls);
-        turnovers=findViewById(R.id.editTurnovers);
-        missedFG =  findViewById(R.id.editMissedFG);
-        minutes =  findViewById(R.id.editMinutes);
 
     }
     private class updateStats extends AsyncTask<String, String, JSONObject> {
@@ -100,17 +108,15 @@ public class updateBasketballStats extends AppCompatActivity {
 
         protected JSONObject doInBackground(String... args) {
             String URL = "https://buasdamlag.000webhostapp.com/updateBasketBallStats.php";
-            String id = args[10];
-            String minutes = args[9];
+
             String points = args[0];
             String rebounds = args[1];
             String steals = args[2];
             String assists = args[3];
             String blocks = args[4];
-            String fouls = args[5];
-            String turnovers = args[6];
-            String missedFG = args[7];
-            String position = args[8];
+            String id = args[5];
+            String position = args[6];
+            String league = args[7];
 
             ArrayList params = new ArrayList();
 
@@ -119,12 +125,9 @@ public class updateBasketballStats extends AppCompatActivity {
             params.add(new BasicNameValuePair("steals", steals));
             params.add(new BasicNameValuePair("assists", assists));
             params.add(new BasicNameValuePair("blocks",blocks));
-            params.add(new BasicNameValuePair("fouls", fouls));
-            params.add(new BasicNameValuePair("turnovers", turnovers));
-            params.add(new BasicNameValuePair("missedFG", missedFG));
-            params.add(new BasicNameValuePair("position", position));
-            params.add(new BasicNameValuePair("minutes", minutes));
             params.add(new BasicNameValuePair("id", id));
+            params.add(new BasicNameValuePair("blocks",position));
+            params.add(new BasicNameValuePair("id", league));
 
             JSONObject json = jsonParser.makeHttpRequest(URL, "POST", params);
 
