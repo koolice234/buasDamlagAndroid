@@ -169,7 +169,7 @@
                         android:text="Position" />
 
                     <Spinner
-                        android:id="@+id/positionspinner"
+                        android:id="@+id/positionSpinner"
                         android:layout_width="match_parent"
                         android:layout_height="46dp" />
 

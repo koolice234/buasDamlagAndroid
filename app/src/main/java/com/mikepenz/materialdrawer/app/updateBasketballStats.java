@@ -30,9 +30,10 @@ public class updateBasketballStats extends AppCompatActivity {
         final String id= getIntent().getStringExtra("id");
         String name= getIntent().getStringExtra("name");
         String email= getIntent().getStringExtra("email");
+        String sport= getIntent().getStringExtra("sport");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tournament_update);
-        final Spinner positionDropdown = findViewById(R.id.positionspinner);
+        final Spinner positionDropdown = findViewById(R.id.positionSpinner);
         String[] positions = new String[]{"Select Position","Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Center"};
         final ArrayAdapter<String> positionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, positions);
         positionDropdown.setAdapter(positionAdapter);
@@ -114,9 +115,9 @@ public class updateBasketballStats extends AppCompatActivity {
             String steals = args[2];
             String assists = args[3];
             String blocks = args[4];
-            String id = args[5];
-            String position = args[6];
-            String league = args[7];
+            String position = args[5];
+            String league = args[6];
+            String id = args[7];
 
             ArrayList params = new ArrayList();
 
@@ -125,9 +126,9 @@ public class updateBasketballStats extends AppCompatActivity {
             params.add(new BasicNameValuePair("steals", steals));
             params.add(new BasicNameValuePair("assists", assists));
             params.add(new BasicNameValuePair("blocks",blocks));
+            params.add(new BasicNameValuePair("position",position));
+            params.add(new BasicNameValuePair("league", league));
             params.add(new BasicNameValuePair("id", id));
-            params.add(new BasicNameValuePair("blocks",position));
-            params.add(new BasicNameValuePair("id", league));
 
             JSONObject json = jsonParser.makeHttpRequest(URL, "POST", params);
 
@@ -143,11 +144,13 @@ public class updateBasketballStats extends AppCompatActivity {
                     String id = getIntent().getStringExtra("id");
                     String name= getIntent().getStringExtra("name");
                     String email= getIntent().getStringExtra("email");
+                    String sport= getIntent().getStringExtra("sport");
                     Intent intent = null;
                     intent = new Intent(updateBasketballStats.this, ProfileViewActivityBasketball.class);
                     intent.putExtra("id",id);
                     intent.putExtra("name",name);
                     intent.putExtra("email",email);
+                    intent.putExtra("sport",sport);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();

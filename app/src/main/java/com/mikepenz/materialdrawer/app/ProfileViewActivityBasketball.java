@@ -9,7 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,9 +27,16 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ProfileViewActivityBasketball extends AppCompatActivity {
@@ -39,11 +49,20 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
     private IProfile profile;
     DashboardActivity DA = new DashboardActivity();
     JSONParser jsonParser=new JSONParser();
+    ArrayAdapter<String> adapter;
+    ListView lv;
+    String line = null;
+    String result1 = null;
+    InputStream is = null;
+    final ArrayList<String> athleteIDArray = new ArrayList<String>(); // List of Athlete ID's
+    String[] data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String id= getIntent().getStringExtra("id");
-        String name= getIntent().getStringExtra("name");
-        String email= getIntent().getStringExtra("email");
+        final String id = getIntent().getStringExtra("id");
+        final String name= getIntent().getStringExtra("name");
+        final String email= getIntent().getStringExtra("email");
+        final String sport= getIntent().getStringExtra("sport");
+
         ProfileViewActivityBasketball.GetUserDetails getUserDetails= new ProfileViewActivityBasketball.GetUserDetails();
         getUserDetails.execute(id);
         super.onCreate(savedInstanceState);
@@ -63,15 +82,44 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                 String id= getIntent().getStringExtra("id");
                 String name= getIntent().getStringExtra("name");
                 String email= getIntent().getStringExtra("email");
+                String sport= getIntent().getStringExtra("sport");
                 Intent intent = null;
                 intent = new Intent(ProfileViewActivityBasketball.this, updateProfile.class);
                 intent.putExtra("id",id);
                 intent.putExtra("name",name);
                 intent.putExtra("email",email);
+                intent.putExtra("sport",sport);
                 startActivity(intent);
             }
 
         });
+
+        lv=findViewById(R.id.leagueList);
+        lv.setClickable(true);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Integer selectionID = Integer.parseInt(athleteIDArray.get(position));
+                String select = selectionID.toString();
+                if (sport.equals("Basketball")) {
+                    Intent intent = null;
+                    intent = new Intent(getApplicationContext(), viewProfile.class);
+                    intent.putExtra("RowID", select);
+                    intent.putExtra("name", name);
+                    intent.putExtra("email", email);
+                    intent.putExtra("sport", sport);
+                    startActivity(intent);
+                }
+            }
+        });
+        getData();
+        if(data!=null && data.length>0) {
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
+            lv.setAdapter(adapter);
+        }else{
+            View empty = findViewById(R.id.leagueList);
+            lv.setEmptyView(empty);
+        }
 
         // Create a few sample profile
         profile = new ProfileDrawerItem().withName(name).withEmail(email).withIcon(getResources().getDrawable(R.drawable.profile3)).withIdentifier(2);
@@ -100,6 +148,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                             String id = getIntent().getStringExtra("id");
                             String name= getIntent().getStringExtra("name");
                             String email= getIntent().getStringExtra("email");
+                            String sport= getIntent().getStringExtra("sport");
 
                             if (drawerItem.getIdentifier() == 1) {
                                 Intent intent = null;
@@ -107,6 +156,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
                                 startActivity(intent);
                             } else if (drawerItem.getIdentifier() == 2) {
                                     Intent intent = null;
@@ -114,6 +164,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                                     intent.putExtra("id",id);
                                     intent.putExtra("name",name);
                                     intent.putExtra("email",email);
+                                    intent.putExtra("sport",sport);
                                     startActivity(intent);
                             } else if (drawerItem.getIdentifier() == 3) {
                                 Intent intent = null;
@@ -121,6 +172,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
                                 startActivity(intent);
                             } else if (drawerItem.getIdentifier() == 4) {
                                 Intent intent = null;
@@ -128,6 +180,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
                                 startActivity(intent);
                             }else if (drawerItem.getIdentifier() == 5) {
                                 Intent intent = null;
@@ -135,6 +188,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
                                 startActivity(intent);
                             }else if (drawerItem.getIdentifier() == 7) {
                                 Intent intent = null;
@@ -142,6 +196,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                                 intent.putExtra("id",id);
                                 intent.putExtra("name",name);
                                 intent.putExtra("email",email);
+                                intent.putExtra("sport",sport);
                                 startActivity(intent);
                             }
                         }
@@ -270,6 +325,54 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+        }
+
+    }
+    private void getData(){
+        final String id = getIntent().getStringExtra("id");
+        try{
+            String address = "https://buasdamlag.000webhostapp.com/leagueRetrieve.php?id="+id;
+            URL url = new URL(address);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            is = new BufferedInputStream(con.getInputStream());
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        try{
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            StringBuilder sb = new StringBuilder();
+
+            while ((line = br.readLine()) != null)
+            {
+                sb.append(line+"\n");
+            }
+
+            is.close();
+            result1 = sb.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try
+        {
+            JSONArray ja = new JSONArray(result1);
+            JSONObject jo;
+
+            data=new String[ja.length()];
+
+            for(int i=0;i<ja.length();i++)
+            {
+                jo=ja.getJSONObject(i);
+                data[i] = jo.getString("tournament_Name");
+                athleteIDArray.add(jo.getString("basketball_id"));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
     }

@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        final Spinner positionDropdown = findViewById(R.id.positionspinner);
+        final Spinner positionDropdown = findViewById(R.id.positionSpinner);
         final Spinner schoolDropdown = findViewById(R.id.lastSchoolSpinner);
         final Spinner genderDropdown = findViewById(R.id.genderspinner);
         String[] gender = new String[]{"Gender","Male", "Female"};

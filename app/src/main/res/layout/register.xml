@@ -48,7 +48,7 @@
                 android:inputType="phone" />
 
             <Spinner
-                android:id="@+id/positionspinner"
+                android:id="@+id/positionSpinner"
                 android:layout_width="303dp"
                 android:layout_height="41dp"
                 android:layout_below="@+id/lastSchoolSpinner"
@@ -89,7 +89,7 @@
                 android:id="@+id/signupbtn"
                 android:layout_width="303dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/positionspinner"
+                android:layout_below="@+id/positionSpinner"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
                 android:text="REGISTER"
