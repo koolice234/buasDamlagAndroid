@@ -101,15 +101,13 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Integer selectionID = Integer.parseInt(athleteIDArray.get(position));
                 String select = selectionID.toString();
-                if (sport.equals("Basketball")) {
                     Intent intent = null;
-                    intent = new Intent(getApplicationContext(), viewProfile.class);
+                    intent = new Intent(getApplicationContext(), tournamentView.class);
                     intent.putExtra("RowID", select);
                     intent.putExtra("name", name);
                     intent.putExtra("email", email);
                     intent.putExtra("sport", sport);
                     startActivity(intent);
-                }
             }
         });
         getData();
