@@ -140,6 +140,7 @@ public class viewProfile extends AppCompatActivity {
             TextView genderText=findViewById(R.id.GenderText);
             TextView birthdayText = findViewById(R.id.BirthdayText);
             TextView schoolText = findViewById(R.id.SchoolText);
+            TextView rankingText = findViewById(R.id.EditRankingPoints);
 
 
             try {
@@ -151,6 +152,7 @@ public class viewProfile extends AppCompatActivity {
                     genderText.setText(result.getString("gender"));
                     birthdayText.setText(result.getString("birthdate"));
                     schoolText.setText(result.getString("school"));
+                    rankingText.setText(result.getString("rankingsScore"));
 
 
                     WebView mWebView =  findViewById(R.id.videoProfile);
