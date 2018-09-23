@@ -72,6 +72,10 @@ public class updateProfile extends AppCompatActivity {
         final TextView addressText =  findViewById(R.id.editAddress);
         final TextView birthdayText = findViewById(R.id.editBirthday);
         final TextView videoURL = findViewById(R.id.editURL);
+        final TextView weight = findViewById(R.id.editWeight);
+        final TextView height = findViewById(R.id.editHeight);
+        final TextView gpa = findViewById(R.id.editGPA);
+        final TextView medical = findViewById(R.id.editMedical);
 
         btnUpdate = findViewById(R.id.updateBtn);
         btnUpload = findViewById(R.id.uploadBtn);
@@ -132,7 +136,11 @@ public class updateProfile extends AppCompatActivity {
                         emailText.getText().toString(),
                         genderDropdown.getSelectedItem().toString(),
                         schoolDropdown.getSelectedItem().toString(),
-                        videoURL.getText().toString());
+                        videoURL.getText().toString(),
+                        weight.getText().toString(),
+                        height.getText().toString(),
+                        gpa.getText().toString(),
+                        medical.getText().toString());
             }
         });
         // Handle Toolbar
@@ -155,7 +163,7 @@ public class updateProfile extends AppCompatActivity {
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_male).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_invitations).withIcon(FontAwesome.Icon.faw_facebook_messenger).withIdentifier(5),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_invitations).withIcon(FontAwesome.Icon.faw_handshake).withIdentifier(5),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_applications).withIcon(FontAwesome.Icon.faw_tasks).withIdentifier(7),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_school).withIcon(FontAwesome.Icon.faw_building).withIdentifier(3),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_coach).withIcon(FontAwesome.Icon.faw_play).withIdentifier(4)
@@ -241,11 +249,22 @@ public class updateProfile extends AppCompatActivity {
                     TextView contactText =  findViewById(R.id.editContact);
                     TextView addressText =  findViewById(R.id.editAddress);
                     TextView birthdayText = findViewById(R.id.editBirthday);
+                    TextView videoText = findViewById(R.id.editURL);
+                    TextView weightText = findViewById(R.id.editWeight);
+                    TextView heightText = findViewById(R.id.editHeight);
+                    TextView gpaText = findViewById(R.id.editGPA);
+                    TextView medicalText = findViewById(R.id.editGPA);
+
                     nameText.setText(result.getString("name"));
                     emailText.setText(result.getString("email"));
                     contactText.setText(result.getString("contact"));
                     addressText.setText(result.getString("address"));
                     birthdayText.setText(result.getString("birthdate"));
+                    videoText.setText(result.getString("youtube"));
+                    weightText.setText(result.getString("weight"));
+                    heightText.setText(result.getString("height"));
+                    gpaText.setText(result.getString("gpa"));
+                    medicalText.setText(result.getString("medical"));
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
@@ -282,6 +301,10 @@ public class updateProfile extends AppCompatActivity {
             String gender = args[6];
             String school = args[7];
             String urlVideo = args[8];
+            String weight = args[9];
+            String height = args[10];
+            String gpa = args[11];
+            String medical = args[12];
 
 
             ArrayList params = new ArrayList();
@@ -295,6 +318,11 @@ public class updateProfile extends AppCompatActivity {
             params.add(new BasicNameValuePair("gender",gender));
             params.add(new BasicNameValuePair("school",school));
             params.add(new BasicNameValuePair("youtube",urlVideo));
+            params.add(new BasicNameValuePair("weight",weight));
+            params.add(new BasicNameValuePair("height",height));
+            params.add(new BasicNameValuePair("gpa",gpa));
+            params.add(new BasicNameValuePair("medical",medical));
+
 
             JSONObject json = jsonParser.makeHttpRequest(URLUpdate, "POST", params);
 
@@ -312,14 +340,12 @@ public class updateProfile extends AppCompatActivity {
                     String name = result.getString("name");
                     String email = result.getString("email");
                     if (result1.equals("1")){
-                        if (sport.equals("Basketball")){
                             Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(),ProfileViewActivityBasketball.class);
                             intent.putExtra("id",id);
                             intent.putExtra("name",name);
                             intent.putExtra("email",email);
                             startActivity(intent);
-                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

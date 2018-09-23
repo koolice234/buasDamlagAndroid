@@ -113,6 +113,50 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp" />
 
+                    <TextView
+                        android:id="@+id/Height"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Previous School" />
+
+                    <TextView
+                        android:id="@+id/heightText"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:id="@+id/textView25"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Weight" />
+
+                    <TextView
+                        android:id="@+id/weightText"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:id="@+id/textView26"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="GPA" />
+
+                    <TextView
+                        android:id="@+id/gpaText"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Medical History" />
+
+                    <TextView
+                        android:id="@+id/medicalText"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

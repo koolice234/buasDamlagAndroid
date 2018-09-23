@@ -58,6 +58,8 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
     String[] data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
         final String id = getIntent().getStringExtra("id");
         final String name= getIntent().getStringExtra("name");
         final String email= getIntent().getStringExtra("email");
@@ -65,8 +67,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
 
         ProfileViewActivityBasketball.GetUserDetails getUserDetails= new ProfileViewActivityBasketball.GetUserDetails();
         getUserDetails.execute(id);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+
 
         // Handle Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -133,7 +134,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_profile).withIcon(FontAwesome.Icon.faw_male).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_invitations).withIcon(FontAwesome.Icon.faw_facebook_messenger).withIdentifier(5),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_invitations).withIcon(FontAwesome.Icon.faw_handshake).withIdentifier(5),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_school).withIcon(FontAwesome.Icon.faw_building).withIdentifier(3),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_coach).withIcon(FontAwesome.Icon.faw_play).withIdentifier(4)
                 ) // add the items we want to use with our Drawer
@@ -255,6 +256,9 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
             TextView genderText=findViewById(R.id.GenderText);
             TextView birthdayText = findViewById(R.id.BirthdayText);
             TextView schoolText = findViewById(R.id.SchoolText);
+            TextView heightText = findViewById(R.id.heightText);
+            TextView weightText = findViewById(R.id.weightText);
+            TextView gpaText = findViewById(R.id.gpaText);
 
 
 
@@ -267,6 +271,9 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                     genderText.setText(result1.getString("gender"));
                     birthdayText.setText(result1.getString("birthdate"));
                     schoolText.setText(result1.getString("school"));
+                    heightText.setText(result1.getString("height"));
+                    weightText.setText(result1.getString("weight"));
+                    gpaText.setText(result1.getString("gpa"));
                     WebView mWebView =  findViewById(R.id.videoProfile);
                     String videoUrl = result1.getString("youtube");
                     // WebViewの設定

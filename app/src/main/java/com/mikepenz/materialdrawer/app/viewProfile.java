@@ -141,6 +141,10 @@ public class viewProfile extends AppCompatActivity {
             TextView birthdayText = findViewById(R.id.BirthdayText);
             TextView schoolText = findViewById(R.id.SchoolText);
             TextView rankingText = findViewById(R.id.EditRankingPoints);
+            TextView heightText = findViewById(R.id.heightText);
+            TextView weightText = findViewById(R.id.weightText);
+            TextView gpaText = findViewById(R.id.gpaText);
+
 
 
             try {
@@ -153,6 +157,9 @@ public class viewProfile extends AppCompatActivity {
                     birthdayText.setText(result.getString("birthdate"));
                     schoolText.setText(result.getString("school"));
                     rankingText.setText(result.getString("rankingsScore"));
+                    heightText.setText(result.getString("height"));
+                    weightText.setText(result.getString("weight"));
+                    gpaText.setText(result.getString("gpa"));
 
 
                     WebView mWebView =  findViewById(R.id.videoProfile);

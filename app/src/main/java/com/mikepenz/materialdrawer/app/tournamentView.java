@@ -67,7 +67,7 @@ public class tournamentView extends AppCompatActivity {
         @Override
 
         protected JSONObject doInBackground(String... args) {
-            String URL = "https://buasdamlag.000webhostapp.com/tournamentView.php";
+            String URL = "https://buasdamlag.000webhostapp.com/tournamentRetrieve.php";
             String id = args[0];
 
             ArrayList params = new ArrayList();

@@ -78,17 +78,47 @@ public class updateBasketballStats extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                updateBasketballStats.updateStats updateStats= new updateBasketballStats.updateStats();
-                //identical to JSON Parser
-                updateStats.execute(
-                        points.getText().toString(),
-                        rebounds.getText().toString(),
-                        steals.getText().toString(),
-                        assists.getText().toString(),
-                        blocks.getText().toString(),
-                        positionSpin,
-                        leagueSpin,
-                        id);
+                String pointsInput = points.getText().toString();
+                String reboundsInput = rebounds.getText().toString();
+                String stealsInput = steals.getText().toString();
+                String assistsInput = assists.getText().toString();
+                String blocksInput = blocks.getText().toString();
+                if(!pointsInput.equals("")&&!reboundsInput.equals("")&&!stealsInput.equals("")&&!assistsInput.equals("")&&!blocksInput.equals("")&&!positionSpin.equals("Select Position")&&!leagueSpin.equals("Select League or Tournament")){
+                    int pointsInt=Integer.parseInt(pointsInput);
+                    int reboundsInt=Integer.parseInt(reboundsInput);
+                    int stealsInt=Integer.parseInt(stealsInput);
+                    int assistsInt=Integer.parseInt(assistsInput);
+                    int blocksInt=Integer.parseInt(blocksInput);
+                        if(pointsInt>30&&reboundsInt>15&&stealsInt>15&&assistsInt>15&&blocksInt>15){
+                            Toast.makeText(getApplicationContext(),"Points is limited to 30. Rebounds,Steals,Assists and Blocks are limited to 15.",Toast.LENGTH_LONG).show();
+                            String id = getIntent().getStringExtra("id");
+                            String name= getIntent().getStringExtra("name");
+                            String email= getIntent().getStringExtra("email");
+                            String sport= getIntent().getStringExtra("sport");
+                            Intent intent = null;
+                            intent = new Intent(updateBasketballStats.this, updateBasketballStats.class);
+                            intent.putExtra("id",id);
+                            intent.putExtra("name",name);
+                            intent.putExtra("email",email);
+                            intent.putExtra("sport",sport);
+                            startActivity(intent);
+                        }else{
+                            updateBasketballStats.updateStats updateStats= new updateBasketballStats.updateStats();
+                            //identical to JSON Parser
+                            updateStats.execute(
+                                    points.getText().toString(),
+                                    rebounds.getText().toString(),
+                                    steals.getText().toString(),
+                                    assists.getText().toString(),
+                                    blocks.getText().toString(),
+                                    positionSpin,
+                                    leagueSpin,
+                                    id);
+                        }
+                }else{
+                    Toast.makeText(getApplicationContext(),"All fields are required",Toast.LENGTH_LONG).show();
+                }
+
             }
 
         });
