@@ -212,6 +212,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="30dp" />
 
+                    <TextView
+                        android:id="@+id/textView28"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Medical History" />
+
+                    <TextView
+                        android:id="@+id/medicalText"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

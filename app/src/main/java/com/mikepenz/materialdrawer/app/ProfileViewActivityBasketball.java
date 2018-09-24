@@ -259,6 +259,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
             TextView heightText = findViewById(R.id.heightText);
             TextView weightText = findViewById(R.id.weightText);
             TextView gpaText = findViewById(R.id.gpaText);
+            TextView medicalText = findViewById(R.id.medicalText);
 
 
 
@@ -274,6 +275,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                     heightText.setText(result1.getString("height"));
                     weightText.setText(result1.getString("weight"));
                     gpaText.setText(result1.getString("gpa"));
+                    medicalText.setText(result1.getString("medical"));
                     WebView mWebView =  findViewById(R.id.videoProfile);
                     String videoUrl = result1.getString("youtube");
                     // WebViewの設定

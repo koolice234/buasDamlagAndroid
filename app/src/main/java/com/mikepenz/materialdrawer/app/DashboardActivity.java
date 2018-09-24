@@ -72,16 +72,9 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-        if(sport.equals("Basketball")){
             getData();
             adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
             lv.setAdapter(adapter);
-        }
-        if(sport.equals("Volleyball")){
-            getDataVolleyball();
-            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
-            lv.setAdapter(adapter);
-        }
 
         // Create a few sample profile
         profile = new ProfileDrawerItem().withName(name).withEmail(email).withIcon(getResources().getDrawable(R.drawable.profile3)).withIdentifier(2);

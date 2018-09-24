@@ -144,6 +144,7 @@ public class viewProfile extends AppCompatActivity {
             TextView heightText = findViewById(R.id.heightText);
             TextView weightText = findViewById(R.id.weightText);
             TextView gpaText = findViewById(R.id.gpaText);
+            TextView medicalText = findViewById(R.id.medicalText);
 
 
 
@@ -160,6 +161,7 @@ public class viewProfile extends AppCompatActivity {
                     heightText.setText(result.getString("height"));
                     weightText.setText(result.getString("weight"));
                     gpaText.setText(result.getString("gpa"));
+                    medicalText.setText(result.getString("medical"));
 
 
                     WebView mWebView =  findViewById(R.id.videoProfile);

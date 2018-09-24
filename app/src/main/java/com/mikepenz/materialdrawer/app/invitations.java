@@ -76,11 +76,7 @@ public class invitations extends AppCompatActivity {
             }
         });
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-        if(sport.equals("Basketball")){
             getData();
-        }else{
-            getDataVolleyball();
-        }
         if(data!=null && data.length>0) {
             adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
             lv.setAdapter(adapter);
