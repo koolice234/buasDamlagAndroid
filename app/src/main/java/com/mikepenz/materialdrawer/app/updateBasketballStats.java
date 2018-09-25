@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class updateBasketballStats extends AppCompatActivity {
 
     EditText points, rebounds, steals, assists, blocks;
-    String positionSpin, leagueSpin;
+    String positionSpin, leagueSpin, awardSpin;
     Button btnUpdateStats;
     DashboardActivity DA = new DashboardActivity();
     JSONParser jsonParser=new JSONParser();
@@ -56,6 +56,21 @@ public class updateBasketballStats extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 leagueSpin = leagueDropdown.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+
+            }
+        });
+        final Spinner awardsDropdown = findViewById(R.id.awardSpinner);
+        String[] awards = new String[]{"Select Award","MVP", "Mythical Five", "Sixth Man", "None"};
+        final ArrayAdapter<String> awardsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, awards);
+        awardsDropdown.setAdapter(awardsAdapter);
+        awardsDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                awardSpin = awardsDropdown.getSelectedItem().toString();
             }
 
             @Override
@@ -113,6 +128,7 @@ public class updateBasketballStats extends AppCompatActivity {
                                     blocks.getText().toString(),
                                     positionSpin,
                                     leagueSpin,
+                                    awardSpin,
                                     id);
                         }
                 }else{
@@ -147,7 +163,8 @@ public class updateBasketballStats extends AppCompatActivity {
             String blocks = args[4];
             String position = args[5];
             String league = args[6];
-            String id = args[7];
+            String award = args[7];
+            String id = args[8];
 
             ArrayList params = new ArrayList();
 
@@ -158,6 +175,7 @@ public class updateBasketballStats extends AppCompatActivity {
             params.add(new BasicNameValuePair("blocks",blocks));
             params.add(new BasicNameValuePair("position",position));
             params.add(new BasicNameValuePair("league", league));
+            params.add(new BasicNameValuePair("award", award));
             params.add(new BasicNameValuePair("id", id));
 
             JSONObject json = jsonParser.makeHttpRequest(URL, "POST", params);

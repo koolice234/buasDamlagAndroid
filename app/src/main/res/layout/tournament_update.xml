@@ -26,7 +26,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="652dp"
+                        android:layout_height="701dp"
                         android:orientation="vertical"
                         android:paddingBottom="24dp"
                         android:paddingLeft="16dp"
@@ -73,6 +73,26 @@
 
                             <Spinner
                                 android:id="@+id/positionSpinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView9"
+                                android:layout_width="293dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Award" />
+
+                            <Spinner
+                                android:id="@+id/awardSpinner"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />

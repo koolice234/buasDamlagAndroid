@@ -91,6 +91,7 @@ public class tournamentView extends AppCompatActivity {
             TextView blocksView = findViewById(R.id.blocksView);
             TextView reboundsView = findViewById(R.id.reboundsView);
             TextView totalRankingPoints = findViewById(R.id.totalRankingPoints);
+            TextView awardView = findViewById(R.id.awardView);
 
 
             try {
@@ -103,6 +104,7 @@ public class tournamentView extends AppCompatActivity {
                     blocksView.setText(result.getString("basketball_blocks"));
                     reboundsView.setText(result.getString("basketball_rebounds"));
                     totalRankingPoints.setText(result.getString("basketball_average"));
+                    awardView.setText(result.getString("award"));
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
