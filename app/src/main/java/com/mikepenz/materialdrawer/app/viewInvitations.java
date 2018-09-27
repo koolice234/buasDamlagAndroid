@@ -62,7 +62,7 @@ public class viewInvitations extends AppCompatActivity {
             try {
                 if (result != null) {
                     nameText.setText(result.getString("name"));
-                    emailText.setText(result.getString("message"));
+                    emailText.setText(result.getString("message1"));
                 } else {
                     Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
                 }

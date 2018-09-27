@@ -225,7 +225,7 @@ public class invitations extends AppCompatActivity {
             for(int i=0;i<ja.length();i++)
             {
                 jo=ja.getJSONObject(i);
-                data[i] = jo.getString("message");
+                data[i] = jo.getString("school");
                 invitationsID.add(jo.getString("id"));
             }
 
@@ -276,7 +276,7 @@ public class invitations extends AppCompatActivity {
             for(int i=0;i<ja.length();i++)
             {
                 jo=ja.getJSONObject(i);
-                data[i] = jo.getString("message");
+                data[i] = jo.getString("school");
                 invitationsID.add(jo.getString("id"));
             }
 
