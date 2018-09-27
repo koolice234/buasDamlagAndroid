@@ -54,7 +54,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
+    @Override
+    public void onBackPressed(){
+        return;
+    }
     private class AttemptLogin extends AsyncTask<String, String, JSONObject> {
 
         @Override
