@@ -23,7 +23,6 @@ public class viewInvitations extends AppCompatActivity {
         String id = getIntent().getStringExtra("invitationID");
         viewInvitations.GetInviDetails GetInviDetails = new viewInvitations.GetInviDetails();
         GetInviDetails.execute(id);
-        Toast.makeText(getApplicationContext(),id,Toast.LENGTH_LONG).show();
 
     }
     private class GetInviDetails extends AsyncTask<String, String, JSONObject> {
