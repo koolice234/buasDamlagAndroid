@@ -7,14 +7,18 @@
     <TextView
         android:id="@+id/athleteName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="Dear, Name" />
+        android:layout_height="44dp"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/invitationMessage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="Message" />
+        android:layout_height="228dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/Coach"
+        android:layout_width="match_parent"
+        android:layout_height="185dp"
+        android:layout_weight="1" />
 </LinearLayout>

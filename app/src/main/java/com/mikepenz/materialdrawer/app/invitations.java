@@ -55,6 +55,7 @@ public class invitations extends AppCompatActivity {
         final String email= getIntent().getStringExtra("email");
         final String message= getIntent().getStringExtra("message");
         final String sport = getIntent().getStringExtra("sport");
+        getData();
         // Handle Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,7 +69,7 @@ public class invitations extends AppCompatActivity {
                 String select = selectionID.toString();
                 Intent intent = null;
                 intent = new Intent(getApplicationContext(), viewInvitations.class);
-                intent.putExtra("RowID", select);
+                intent.putExtra("invitationID", select);
                 intent.putExtra("name", name);
                 intent.putExtra("message", message);
                 intent.putExtra("sport", sport);
@@ -76,7 +77,6 @@ public class invitations extends AppCompatActivity {
             }
         });
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
-            getData();
         if(data!=null && data.length>0) {
             adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
             lv.setAdapter(adapter);
@@ -226,7 +226,7 @@ public class invitations extends AppCompatActivity {
             {
                 jo=ja.getJSONObject(i);
                 data[i] = jo.getString("school");
-                invitationsID.add(jo.getString("id"));
+                invitationsID.add(jo.getString("athlete_id"));
             }
 
         }catch (Exception e){

@@ -13,13 +13,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class viewInvitations extends AppCompatActivity {
+    String URL= "https://buasdamlag.000webhostapp.com/invitationRetrieveByID.php";
     JSONParser jsonParser=new JSONParser();
     protected void onCreate(Bundle savedInstanceState) {
-        String rowID = getIntent().getStringExtra("RowID");
-        viewInvitations.GetInviDetails getUserDetails = new viewInvitations.GetInviDetails();
-        getUserDetails.execute(rowID);
+
+        setContentView(R.layout.invitationview);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invitationview);
+        String id = getIntent().getStringExtra("invitationID");
+        viewInvitations.GetInviDetails GetInviDetails = new viewInvitations.GetInviDetails();
+        GetInviDetails.execute(id);
+        Toast.makeText(getApplicationContext(),id,Toast.LENGTH_LONG).show();
 
     }
     private class GetInviDetails extends AsyncTask<String, String, JSONObject> {
@@ -35,7 +39,6 @@ public class viewInvitations extends AppCompatActivity {
         @Override
 
         protected JSONObject doInBackground(String... args) {
-            String URL = "https://buasdamlag.000webhostapp.com/invitationRetrieveByID.php";
             String id = args[0];
 
             ArrayList params = new ArrayList();
@@ -56,13 +59,15 @@ public class viewInvitations extends AppCompatActivity {
 
             TextView nameText=findViewById(R.id.athleteName);
             TextView emailText=findViewById(R.id.invitationMessage);
+            TextView coach=findViewById(R.id.Coach);
 
 
 
             try {
                 if (result != null) {
-                    nameText.setText(result.getString("name"));
+                    nameText.setText("Dear, "+result.getString("name1"));
                     emailText.setText(result.getString("message1"));
+                    coach.setText("From Coach, "+result.getString("coachName1"));
                 } else {
                     Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
                 }
