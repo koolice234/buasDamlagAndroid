@@ -232,6 +232,19 @@
                         android:ems="10"
                         android:inputType="textPersonName" />
 
+                    <TextView
+                        android:id="@+id/textView31"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Year Graduated" />
+
+                    <EditText
+                        android:id="@+id/yearGraduated"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number" />
+
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

@@ -76,6 +76,7 @@ public class updateProfile extends AppCompatActivity {
         final TextView height = findViewById(R.id.editHeight);
         final TextView gpa = findViewById(R.id.editGPA);
         final TextView medical = findViewById(R.id.editMedical);
+        final TextView yearGraduated = findViewById(R.id.yearGraduated);
 
         btnUpdate = findViewById(R.id.updateBtn);
         btnUpload = findViewById(R.id.uploadBtn);
@@ -140,7 +141,8 @@ public class updateProfile extends AppCompatActivity {
                         weight.getText().toString(),
                         height.getText().toString(),
                         gpa.getText().toString(),
-                        medical.getText().toString());
+                        medical.getText().toString(),
+                        yearGraduated.getText().toString());
             }
         });
         // Handle Toolbar
@@ -253,7 +255,8 @@ public class updateProfile extends AppCompatActivity {
                     TextView weightText = findViewById(R.id.editWeight);
                     TextView heightText = findViewById(R.id.editHeight);
                     TextView gpaText = findViewById(R.id.editGPA);
-                    TextView medicalText = findViewById(R.id.editGPA);
+                    TextView medicalText = findViewById(R.id.editMedical);
+                    TextView yearGraduatedText = findViewById(R.id.yearGraduated);
 
                     nameText.setText(result.getString("name"));
                     emailText.setText(result.getString("email"));
@@ -265,6 +268,7 @@ public class updateProfile extends AppCompatActivity {
                     heightText.setText(result.getString("height"));
                     gpaText.setText(result.getString("gpa"));
                     medicalText.setText(result.getString("medical"));
+                    yearGraduatedText.setText(result.getString("yearGraduated"));
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
@@ -305,6 +309,7 @@ public class updateProfile extends AppCompatActivity {
             String height = args[10];
             String gpa = args[11];
             String medical = args[12];
+            String yearGraduated = args[13];
 
 
             ArrayList params = new ArrayList();
@@ -322,7 +327,7 @@ public class updateProfile extends AppCompatActivity {
             params.add(new BasicNameValuePair("height",height));
             params.add(new BasicNameValuePair("gpa",gpa));
             params.add(new BasicNameValuePair("medical",medical));
-
+            params.add(new BasicNameValuePair("yearGraduated",yearGraduated));
 
             JSONObject json = jsonParser.makeHttpRequest(URLUpdate, "POST", params);
 

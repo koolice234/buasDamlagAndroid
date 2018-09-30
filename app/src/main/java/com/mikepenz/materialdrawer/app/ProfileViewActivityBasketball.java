@@ -260,6 +260,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
             TextView weightText = findViewById(R.id.weightText);
             TextView gpaText = findViewById(R.id.gpaText);
             TextView medicalText = findViewById(R.id.medicalText);
+            TextView yearGraduatedText = findViewById(R.id.yearGraduatedText);
 
 
 
@@ -276,6 +277,7 @@ public class ProfileViewActivityBasketball extends AppCompatActivity {
                     weightText.setText(result1.getString("weight"));
                     gpaText.setText(result1.getString("gpa"));
                     medicalText.setText(result1.getString("medical"));
+                    yearGraduatedText.setText(result1.getString("yearGraduated"));
                     WebView mWebView =  findViewById(R.id.videoProfile);
                     String videoUrl = result1.getString("youtube");
                     // WebViewの設定
